@@ -10,7 +10,7 @@
         <p>Кол-во пользователей в БД: {{ $users->total() }}</p>
 
         <!-- Форма для создания новых пользователей -->
-        <form wire:submit.prevent="createUser">
+        <form wire:submit="createUser">
             <div style="margin-bottom: 15px;">
                 <label for="name">Имя:</label>
                 <input type="text" id="name" wire:model="name" required style="width: 500px; padding: 8px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc; transition: border 0.3s, box-shadow 0.3s;">

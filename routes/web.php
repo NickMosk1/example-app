@@ -25,4 +25,7 @@ Route::view('profile', 'profile')
 
 Route::get('users', \App\Livewire\Users::class);
 
+Route::get('applications', \App\Livewire\Applications::class);
+
+
 require __DIR__.'/auth.php';
