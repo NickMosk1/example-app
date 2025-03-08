@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +20,7 @@ class Login extends Component
         if (Auth::attempt(['email' => $this->email, 'password' => $this->password])) {
             return redirect()->route('users.table');
         } else {
-            session()->flash('error', 'Неверные учетные данные.');
+            session()->flash('error', 'Такого аккаунта не существует! Пожалуйста, повторите попытку авторизации.');
         }
     }
 

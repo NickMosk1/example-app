@@ -2,7 +2,7 @@
     <h2>Вход в систему</h2>
 
     @if (session()->has('error'))
-        <div style="color: red;">{{ session('error') }}</div>
+        <div class="error-message">{{ session('error') }}</div>
     @endif
 
     <form wire:submit.prevent="login">
@@ -15,5 +15,14 @@
             <input type="password" id="password" wire:model="password" required>
         </div>
         <button type="submit">Войти</button>
+        <button id="home">На главную</button>
     </form>
+
+    <script>
+        document.getElementById('home').addEventListener('click', function() {
+            window.location.href = '/';
+        });
+    </script>
+    
+    @include('customPages.loginPage.login-page-styles')
 </div>

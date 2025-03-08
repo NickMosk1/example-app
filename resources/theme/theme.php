@@ -6,6 +6,7 @@ return [
     'DEFAULT_GRAY' => '#9e9e9e',
     'DARK_GRAY' => '#666666',
     'BLACK' => '#000000',
+    'LIGHT_GREEN' => '#c5ffe0',
     'GREEN' => '#00b955',
     'GREEN_HOVER' => '#008c45',
     'RED' => '#ff0000',
@@ -23,5 +24,5 @@ return [
     'LIME' => '#00ff00',
     'AQUA' => '#00ffff',
     'MAROON' => '#800000',
-    'SILVER' => '#c0c0c0',
+    'SILVER' => '#cdcdcd',
 ];

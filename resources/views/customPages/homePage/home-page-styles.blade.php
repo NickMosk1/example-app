@@ -39,7 +39,7 @@
     }
     .btn:hover {
         background-color: {{$colors['GREEN_HOVER']}};
-        box-shadow: 0 4px 8px {{$colors['LIGHT_GRAY']}};
+        box-shadow: 0 4px 4px {{$colors['LIGHT_GRAY']}};
     }
     .about-company {
         color: {{$colors['DEFAULT_GRAY']}};

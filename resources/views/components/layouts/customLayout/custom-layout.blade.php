@@ -15,14 +15,19 @@
     </head>
     <body>
         <header>
-            <div class="logo">
+            <div class="logo" id="logo-container">
                 <img src="{{ asset('additional/logo.JPG') }}" alt="Логотип">
                 <span> ПЕРЕДАЙ-КА </span>
             </div>
             <div class="profile-buttons">
-
             </div>
         </header>
+
+        <script>
+            document.getElementById('logo-container').addEventListener('click', function() {
+                window.location.href = '/';
+            });
+        </script>
 
         <div class="content">
             {{ $slot }}
