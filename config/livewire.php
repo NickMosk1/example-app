@@ -38,7 +38,7 @@ return [
     |
     */
 
-    'layout' => 'components.layouts.app',
+    'layout' => 'components.layouts.customLayout.custom-layout',
 
     /*
     |---------------------------------------------------------------------------

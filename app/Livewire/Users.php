@@ -14,14 +14,14 @@ class Users extends Component
     public $name;
     public $email;
     public $password;
-    public $perPage = 25; // Количество записей на странице по умолчанию
+    public $perPage = 25;
 
     public function render()
     {
         $users = User::paginate($this->perPage);
-        return view('livewire.users', [
+        return view('customPages.usersTablePage.users-table-page', [
             'users' => $users,
-        ])->layout('layouts.app');
+        ])->layout('components.layouts.customLayout.custom-layout');
     }
 
     public function createUser()
@@ -38,7 +38,6 @@ class Users extends Component
             'password' => Hash::make($this->password),
         ]);
 
-        // Сброс полей формы после создания
         $this->name = '';
         $this->email = '';
         $this->password = '';
