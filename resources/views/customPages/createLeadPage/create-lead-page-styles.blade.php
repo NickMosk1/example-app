@@ -1,15 +1,14 @@
 <style>
-    .login-container {
+    .create-lead-container {
         width: 500px;
         margin: 50px auto;
         padding: 20px;
         background-color: {{$colors['WHITE']}};
         border-radius: 10px;
-        text-align: center;
         box-shadow: 0 4px 4px {{$colors['LIGHT_GRAY']}};
-        transition: all 0.3s ease;
+        text-align: center;
     }
-    .login-image-container {
+    .create-lead-image-container {
         width: 100%;
         display: flex;
         align-items: center;
@@ -17,50 +16,43 @@
         margin-bottom: 30px;
         transition: all 0.3s ease;
     }
-    .login-image {
+    .create-lead-image {
         width: 180px;
         height: 180px;
         border-radius: 10px;
         transition: all 0.3s ease;
     }
-    .login-title {
+    .create-lead-title {
         color: {{$colors['DEFAULT_GRAY']}};
         font-family: 'Montserrat', sans-serif;
         font-weight: bold;
         margin-bottom: 20px;
         transition: all 0.3s ease;
     }
-    .login-title {
-        color: {{$colors['DEFAULT_GRAY']}};
-        font-weight: bold;
-        font-family: 'Montserrat', sans-serif;
-        margin-bottom: 20px;
-        transition: all 0.3s ease;
-    }
-    .login-container form div {
+    .create-lead-container form div {
         margin-bottom: 15px;
         text-align: left;
     }
-    .login-container label {
+    .create-lead-container label {
         display: block;
         margin-bottom: 5px;
         color: {{$colors['DARK_GRAY']}};
         font-family: 'Montserrat', sans-serif;
     }
-    .login-container input {
+    .create-lead-container input, .create-lead-container select {
         width: 100%;
         padding: 10px;
         border: 1px solid {{$colors['LIGHT_GRAY']}};
         border-radius: 5px;
         font-size: 1em;
-        transition: all 0.3s ease;
+        transition: border 0.3s ease, box-shadow 0.3s ease;
     }
-    .login-container input:focus {
+    .create-lead-container input:focus, .create-lead-container select:focus {
         border-color: {{$colors['GREEN']}};
         outline: none;
         box-shadow: 0 4px 4px {{$colors['GREEN']}};
     }
-    .login-button {
+    .create-lead-button {
         width: 100%;
         padding: 10px 20px;
         background-color: {{$colors['GREEN']}};
@@ -74,7 +66,7 @@
         transition: all 0.3s ease;
         margin-top: 10px;
     }
-    .login-button:hover {
+    .create-lead-button:hover {
         background-color: {{$colors['GREEN_HOVER']}};
     }
     .home-button {
@@ -94,17 +86,12 @@
     .home-button:hover {
         background-color: {{$colors['GREEN_HOVER']}};
     }
-    .login-image.hovered {
+    .create-lead-image.hovered {
         transition: all 0.3s ease;
         box-shadow: 0 4px 12px {{ $colors['GREEN'] }};
     }
-    .login-title.hovered {
+    .create-lead-title.hovered {
+        transition: all 0.3s ease;
         color: {{$colors['GREEN']}};
-    }
-    .error-message {
-        color: {{$colors['RED']}};
-        font-family: 'Montserrat', sans-serif;
-        font-weight: bold;
-        margin-bottom: 15px;
     }
 </style>

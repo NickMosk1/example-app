@@ -1,5 +1,10 @@
 <div class="login-container">
-    <h2>Вход в систему</h2>
+
+    <div class="login-image-container">
+        <img class="login-image" src="{{ asset('additional/login.JPG') }}" alt="Логин-панель">
+    </div>
+
+    <div class="login-title">Вход в систему</div>
 
     @if (session()->has('error'))
         <div class="error-message">{{ session('error') }}</div>
@@ -14,13 +19,23 @@
             <label for="password">Пароль:</label>
             <input type="password" id="password" wire:model="password" required>
         </div>
-        <button type="submit">Войти</button>
-        <button id="home">На главную</button>
+        <button class="login-button" type="submit">Войти</button>
+        <button class="home-button" id="home">На главную</button>
     </form>
 
     <script>
         document.getElementById('home').addEventListener('click', function() {
             window.location.href = '/';
+        });
+        document.querySelectorAll('.login-button').forEach(button => {
+            button.addEventListener('mouseover', function() {
+                document.querySelector('.login-image').classList.add('hovered');
+                document.querySelector('.login-title').classList.add('hovered');
+            });
+            button.addEventListener('mouseout', function() {
+                document.querySelector('.login-image').classList.remove('hovered');
+                document.querySelector('.login-title').classList.remove('hovered');
+            });
         });
     </script>
     

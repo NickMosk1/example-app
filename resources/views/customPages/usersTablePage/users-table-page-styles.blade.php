@@ -24,7 +24,8 @@
     }
     .user-table th, .user-table td {
         padding: 12px;
-        text-align: left;
+        text-align: center;
+        vertical-align: middle;
     }
     .user-table tbody tr {
         color: {{ $colors['GREEN'] }};

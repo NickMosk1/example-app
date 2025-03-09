@@ -8,6 +8,27 @@
         box-shadow: 0 4px 4px {{$colors['LIGHT_GRAY']}};
         text-align: center;
     }
+    .create-user-image-container {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 30px;
+        transition: all 0.3s ease;
+    }
+    .create-user-image {
+        width: 180px;
+        height: 180px;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+    }
+    .create-user-title {
+        color: {{$colors['DEFAULT_GRAY']}};
+        font-family: 'Montserrat', sans-serif;
+        font-weight: bold;
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+    }
     .user-creation-container .success {
         color: {{$colors['GREEN']}};
         font-family: 'Montserrat', sans-serif;
@@ -43,11 +64,13 @@
         outline: none;
         box-shadow: 0 4px 4px {{$colors['GREEN']}};
     }
-    .user-creation-container button {
+    .create-user-button {
         width: 100%;
         padding: 10px 20px;
         background-color: {{$colors['GREEN']}};
         color: {{$colors['WHITE']}};
+        font-weight: bold;
+        font-family: 'Montserrat', sans-serif;
         border: none;
         border-radius: 5px;
         font-size: 1em;
@@ -55,7 +78,32 @@
         transition: all 0.3s ease;
         margin-top: 10px;
     }
-    .user-creation-container button:hover {
+    .create-user-button:hover {
         background-color: {{$colors['GREEN_HOVER']}};
+    }
+    .home-button {
+        width: 100%;
+        padding: 10px 20px;
+        background-color: {{$colors['GREEN']}};
+        color: {{$colors['WHITE']}};
+        font-weight: bold;
+        font-family: 'Montserrat', sans-serif;
+        border: none;
+        border-radius: 5px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 10px;
+    }
+    .home-button:hover {
+        background-color: {{$colors['GREEN_HOVER']}};
+    }
+    .create-user-image.hovered {
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px {{ $colors['GREEN'] }};
+    }
+    .create-user-title.hovered {
+        transition: all 0.3s ease;
+        color: {{$colors['GREEN']}};
     }
 </style>
