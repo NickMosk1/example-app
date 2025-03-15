@@ -8,6 +8,22 @@
         min-height: 100vh;
         background-color: {{ $colors['WHITE'] }};
     }
+    .account-icon-container {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        z-index: 1000;
+    }
+    .account-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        transition: transform 0.3s ease;
+        cursor: pointer;
+    }
+    .account-icon:hover {
+        transform: scale(1.1);
+    }
     header {
         background-color: {{ $colors['GREEN'] }}; 
         color: {{ $colors['WHITE'] }};

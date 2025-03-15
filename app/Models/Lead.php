@@ -39,4 +39,5 @@ class Lead extends Model
     {
         return ['pending', 'in_progress', 'sold_to_partner', 'cancelled'];
     }
+    
 }

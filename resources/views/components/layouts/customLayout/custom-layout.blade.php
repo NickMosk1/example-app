@@ -15,12 +15,22 @@
     </head>
     <body>
         <header>
+        <div class="account-icon-container">
+                <a href="{{ route('account') }}">
+                    <img 
+                        src="{{ asset('additional/account-icon.JPG') }}" 
+                        alt="Аккаунт" 
+                        class="account-icon"
+                    >
+                </a>
+            </div>
             <div class="logo" id="logo-container">
                 <img src="{{ asset('additional/logo.JPG') }}" alt="Логотип">
                 <span> ПЕРЕДАЙ-КА </span>
             </div>
             <div class="profile-buttons">
             </div>
+            
         </header>
 
         <script>

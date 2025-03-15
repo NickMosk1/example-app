@@ -16,6 +16,7 @@
         margin-bottom: 25px;
         transition: all 0.3s ease;
     }
+
     .admin-panel-image {
         width: 180px;
         height: 180px;
@@ -57,4 +58,22 @@
         transition: all 0.3s ease;
         color: {{$colors['GREEN']}};
     }
+
+    .account-menu {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    z-index: 1000;
+    }
+
+    .account-icon {
+        font-size: 32px;
+        color: #2c3e50;
+        transition: all 0.3s ease;
+    }
+
+    .account-icon:hover {
+        color: #3498db;
+        transform: scale(1.1);
+    }   
 </style>
