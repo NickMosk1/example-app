@@ -15,27 +15,24 @@
     </head>
     <body>
         <header>
-        <div class="account-icon-container">
-                <a href="{{ route('account') }}">
-                    <img 
-                        src="{{ asset('additional/account-icon.JPG') }}" 
-                        alt="Аккаунт" 
-                        class="account-icon"
-                    >
-                </a>
-            </div>
             <div class="logo" id="logo-container">
                 <img src="{{ asset('additional/logo.JPG') }}" alt="Логотип">
                 <span> ПЕРЕДАЙ-КА </span>
             </div>
-            <div class="profile-buttons">
-            </div>
-            
+                @auth
+                    <div class="account-info" id="account-info-container">
+                        <span class="username">{{ Auth::user()->email }}</span>
+                        <img src="{{ asset('additional/account.JPG') }}" alt="Аккаунт" class="account-icon">
+                    </div>
+                @endauth
         </header>
 
         <script>
             document.getElementById('logo-container').addEventListener('click', function() {
                 window.location.href = '/';
+            });
+            document.getElementById('account-info-container').addEventListener('click', function() {
+                window.location.href = '/account';
             });
         </script>
 

@@ -8,22 +8,6 @@
         min-height: 100vh;
         background-color: {{ $colors['WHITE'] }};
     }
-    .account-icon-container {
-        position: absolute;
-        top: 20px;
-        right: 30px;
-        z-index: 1000;
-    }
-    .account-icon {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        transition: transform 0.3s ease;
-        cursor: pointer;
-    }
-    .account-icon:hover {
-        transform: scale(1.1);
-    }
     header {
         background-color: {{ $colors['GREEN'] }}; 
         color: {{ $colors['WHITE'] }};
@@ -36,9 +20,12 @@
     header .logo {
         display: flex;
         align-items: center;
+        transition: all 0.3s ease;
     }
     header .logo:hover {
         cursor: pointer;
+        transform: scale(1.05);
+        transition: all 0.3s ease;
     }
     header .logo img {
         height: 60px;
@@ -52,9 +39,31 @@
         font-weight: bold;
         font-family: 'Montserrat', sans-serif;
     }
-    header .profile-buttons {
+    header .account-info {
         display: flex;
-        gap: 15px;
+        align-items: center;
+        height: 50px;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        padding-right: 10px;
+    }
+    header .account-info:hover {
+        transform: scale(1.1);
+        border-radius: 50%;
+        transition: all 0.3s ease;
+    }
+    header .username {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: bold;
+        color: {{ $colors['WHITE'] }};
+        cursor: pointer;
+        padding-right: 10px;
+    }
+    header .account-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
     }
     header .profile-buttons button {
         background-color: transparent;

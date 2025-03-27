@@ -98,7 +98,6 @@
         cursor: not-allowed;
     }
 
-    /* Новые стили для функционала редактирования */
     .action-buttons {
         display: flex;
         gap: 18px;
@@ -117,32 +116,68 @@
         display: flex;
         align-items: center;
         justify-content: center;
+    }
 
+    td.actions-cell {
+        padding: 0.5rem;
+        text-align: center;
+    }   
+
+    .record-button-container {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        width: 100px;
     }
 
     .btn-edit {
-    color: {{$colors['BLUE']}};
-    background-color: {{$colors['BLACK']}}20; /* HEX с прозрачностью 12.5% */
-    margin-right: 8px
-    }       
+        margin-right: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+    .btn-edit:hover {
+        transform: scale(1.1);
+        transition: all 0.3s ease;
+    }
 
     .btn-delete {
-    color: {{$colors['RED']}};
-    background-color: {{$colors['BLACK']}}20; /* HEX с прозрачностью 12.5% */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }    
+
+    .btn-delete:hover {
+        transform: scale(1.1);
+        transition: all 0.3s ease;
     }
+
+    .edit-image {
+        width: 20px;
+        height: 20px;
+    }
+
+    .delete-image {
+        width: 25px;
+        height: 25px;
+    }
+
     .btn-action:hover {
         transform: scale(1.1);
         box-shadow: 0 2px 4px {{$colors['LIGHT_GRAY']}};
     }
 
-    /* Стили для модального окна */
     .modal-overlay {
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgba(0,0,0,0.5);
+        background-color: rgba(0, 0, 0, 0.5);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -150,102 +185,140 @@
     }
 
     .modal-content {
-        background: {{$colors['WHITE']}};
-        padding: 2rem;
-        border-radius: 12px;
         width: 500px;
-        max-width: 95%;
-        box-shadow: 0 4px 8px {{$colors['LIGHT_GRAY']}};
+        margin: 20px auto;
+        padding: 20px;
+        background-color: {{$colors['WHITE']}};
+        border-radius: 10px;
+        box-shadow: 0 4px 4px {{$colors['LIGHT_GRAY']}};
+        text-align: center;
+        animation: modalEnter 0.3s ease-out;
     }
 
-    .modal-content h3 {
-        color: {{$colors['DARK_GRAY']}};
-        margin-bottom: 1.5rem;
-        font-size: 1.5rem;
-    }
-
-    .form-group {
-        margin-bottom: 1.2rem;
-    }
-
-    .form-label {
-        display: block;
-        margin-bottom: 0.5rem;
-        color: {{$colors['DARK_GRAY']}};
-        font-weight: 500;
-    }
-
-    .form-input {
+    .modal-image-container {
         width: 100%;
-        padding: 0.8rem;
-        border: 2px solid {{$colors['LIGHT_GREEN']}};
-        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+    }
+
+    .modal-image {
+        width: 120px;
+        height: 120px;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .modal-title {
+        color: {{$colors['DEFAULT_GRAY']}};
         font-family: 'Montserrat', sans-serif;
-        transition: border-color 0.3s ease;
+        font-weight: bold;
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
     }
 
-    .form-input:focus {
-        outline: none;
+    .modal-content form div {
+        margin-bottom: 15px;
+        text-align: left;
+    }
+
+    .modal-content label {
+        display: block;
+        margin-bottom: 5px;
+        color: {{$colors['DARK_GRAY']}};
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .modal-content input,
+    .modal-content select,
+    .modal-content textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid {{$colors['LIGHT_GRAY']}};
+        border-radius: 5px;
+        font-size: 1em;
+        transition: all 0.3s ease;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .modal-content textarea {
+        min-height: 80px;
+        resize: vertical;
+    }
+
+    .modal-content input:focus,
+    .modal-content select:focus,
+    .modal-content textarea:focus {
         border-color: {{$colors['GREEN']}};
-    }
-
-    .form-select {
-        appearance: none;
-        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-        background-repeat: no-repeat;
-        background-position: right 1rem center;
-        background-size: 1em;
+        outline: none;
+        box-shadow: 0 4px 4px {{$colors['GREEN']}};
     }
 
     .modal-actions {
         display: flex;
-        gap: 1rem;
-        justify-content: flex-end;
-        margin-top: 2rem;
+        gap: 10px;
+        margin-top: 20px;
     }
 
-    .btn-primary {
+    .modal-save-button {
+        flex: 1;
+        padding: 10px 20px;
         background-color: {{$colors['GREEN']}};
         color: {{$colors['WHITE']}};
-        padding: 0.8rem 1.5rem;
+        font-weight: bold;
+        font-family: 'Montserrat', sans-serif;
         border: none;
-        border-radius: 8px;
+        border-radius: 5px;
+        font-size: 1em;
         cursor: pointer;
-        transition: background-color 0.3s ease;
+        transition: all 0.3s ease;
     }
 
-    .btn-primary:hover {
+    .modal-save-button:hover {
         background-color: {{$colors['GREEN_HOVER']}};
     }
 
-    .btn-secondary {
-        background-color: {{$colors['LIGHT_GREEN']}};
+    .modal-cancel-button {
+        flex: 1;
+        padding: 10px 20px;
+        background-color: {{$colors['LIGHT_GRAY']}};
         color: {{$colors['DARK_GRAY']}};
-        padding: 0.8rem 1.5rem;
+        font-weight: bold;
+        font-family: 'Montserrat', sans-serif;
         border: none;
-        border-radius: 8px;
+        border-radius: 5px;
+        font-size: 1em;
         cursor: pointer;
-        transition: background-color 0.3s ease;
+        transition: all 0.3s ease;
     }
 
-    .btn-secondary:hover {
-        background-color: {{$colors['LIGHT_GRAY']}};
+    .modal-cancel-button:hover {
+        background-color: {{$colors['DEFAULT_GRAY']}};
+        color: {{$colors['WHITE']}};
     }
 
     .error-message {
         color: {{$colors['RED']}};
-        font-size: 0.875rem;
-        margin-top: 0.5rem;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.9em;
+        margin-top: 5px;
         display: block;
     }
 
-    /* Анимация модального окна */
     @keyframes modalEnter {
         from { transform: translateY(-20px); opacity: 0; }
         to { transform: translateY(0); opacity: 1; }
     }
 
-    .modal-content {
-        animation: modalEnter 0.3s ease-out;
+    /* Эффекты при наведении на кнопки */
+    .modal-save-button:hover + .modal-image-container .modal-image,
+    .modal-save-button:hover ~ .modal-title {
+        color: {{$colors['GREEN']}};
+    }
+
+    .modal-save-button:hover + .modal-image-container .modal-image {
+        box-shadow: 0 4px 12px {{$colors['GREEN']}};
     }
 </style>

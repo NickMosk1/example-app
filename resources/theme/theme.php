@@ -26,12 +26,3 @@ return [
     'MAROON' => '#800000',
     'SILVER' => '#cdcdcd',
 ];
-$colors = [
-    'WHITE' => '#ffffff',
-    'LIGHT_GRAY' => '#f0f0f0',
-    'DEFAULT_GRAY' => '#333333',
-    'GREEN' => '#2ecc71',
-    'GREEN_HOVER' => '#27ae60',
-    'GREEN_OPACITY_20' => 'rgba(46, 204, 113, 0.2)',
-    'GREEN_OPACITY_30' => 'rgba(46, 204, 113, 0.3)'
-];
