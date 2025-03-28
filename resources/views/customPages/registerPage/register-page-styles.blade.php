@@ -1,5 +1,5 @@
 <style>
-    .account-container {
+    .user-creation-container {
         width: 500px;
         margin: 50px auto;
         padding: 20px;
@@ -10,7 +10,7 @@
         transition: all 0.3s ease;
     }
     
-    .account-image-container {
+    .create-user-image-container {
         width: 100%;
         display: flex;
         align-items: center;
@@ -19,14 +19,14 @@
         transition: all 0.3s ease;
     }
     
-    .account-image {
+    .create-user-image {
         width: 180px;
         height: 180px;
         border-radius: 10px;
         transition: all 0.3s ease;
     }
     
-    .account-title {
+    .create-user-title {
         color: {{$colors['DEFAULT_GRAY']}};
         font-family: 'Montserrat', sans-serif;
         font-weight: bold;
@@ -34,19 +34,19 @@
         transition: all 0.3s ease;
     }
     
-    .account-container form div {
+    .user-creation-container form div {
         margin-bottom: 15px;
         text-align: left;
     }
     
-    .account-container label {
+    .user-creation-container label {
         display: block;
         margin-bottom: 5px;
         color: {{$colors['DARK_GRAY']}};
         font-family: 'Montserrat', sans-serif;
     }
     
-    .account-container input {
+    .user-creation-container input {
         width: 100%;
         padding: 10px;
         border: 1px solid {{$colors['LIGHT_GRAY']}};
@@ -55,13 +55,13 @@
         transition: border 0.3s ease, box-shadow 0.3s ease;
     }
     
-    .account-container input:focus {
+    .user-creation-container input:focus {
         border-color: {{$colors['GREEN']}};
         outline: none;
         box-shadow: 0 4px 4px {{$colors['GREEN']}};
     }
     
-    .account-button {
+    .create-user-button {
         width: 100%;
         padding: 10px 20px;
         background-color: {{$colors['GREEN']}};
@@ -76,7 +76,7 @@
         margin-top: 10px;
     }
     
-    .account-button:hover {
+    .create-user-button:hover {
         background-color: {{$colors['GREEN_HOVER']}};
     }
     
@@ -99,50 +99,51 @@
         background-color: {{$colors['GREEN_HOVER']}};
     }
     
-    .account-image.hovered {
+    .create-user-image.hovered {
         transition: all 0.3s ease;
         box-shadow: 0 4px 12px {{ $colors['GREEN'] }};
     }
     
-    .account-title.hovered {
+    .create-user-title.hovered {
         transition: all 0.3s ease;
         color: {{$colors['GREEN']}};
     }
     
-    .alert {
-        padding: 15px;
-        margin-bottom: 20px;
-        border-radius: 5px;
+    .login-link {
+        margin-top: 20px;
         font-family: 'Montserrat', sans-serif;
-        font-size: 0.95em;
-        transition: all 0.3s ease;
-        border-left: 4px solid;
+        color: {{$colors['DARK_GRAY']}};
     }
     
-    .alert-success {
-        background-color: rgba(76, 175, 80, 0.15);
-        color: {{ $colors['GREEN'] }};
-        border-left-color: {{ $colors['GREEN'] }};
+    .login-link a {
+        color: {{$colors['GREEN']}};
+        font-weight: bold;
+        text-decoration: none;
+        transition: color 0.3s ease;
     }
     
-    .alert-error {
-        background-color: rgba(244, 67, 54, 0.15);
-        color: {{ $colors['RED'] }};
-        border-left-color: {{ $colors['RED'] }};
+    .login-link a:hover {
+        color: {{$colors['GREEN_HOVER']}};
+        text-decoration: underline;
     }
     
-    .alert ul {
-        margin: 0;
-        padding-left: 20px;
+    .error {
+        color: {{$colors['RED']}};
+        font-family: 'Montserrat', sans-serif;
+        margin: 15px 0;
+        padding: 10px;
+        background-color: rgba(244, 67, 54, 0.1);
+        border-radius: 5px;
+        border-left: 3px solid {{$colors['RED']}};
     }
     
-    .alert li {
-        margin-bottom: 5px;
+    .success {
+        color: {{$colors['GREEN']}};
+        font-family: 'Montserrat', sans-serif;
+        margin: 15px 0;
+        padding: 10px;
+        background-color: rgba(76, 175, 80, 0.1);
+        border-radius: 5px;
+        border-left: 3px solid {{$colors['GREEN']}};
     }
-    
-    .alert li:last-child {
-        margin-bottom: 0;
-    }
-
-    
 </style>

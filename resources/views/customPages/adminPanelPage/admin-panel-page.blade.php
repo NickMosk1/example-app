@@ -1,5 +1,4 @@
 <div class="admin-panel-container">
-
     <div class="admin-panel-image-container">
         <img class="admin-panel-image" src="{{ asset('additional/adminPanel.JPG') }}" alt="Админ-панель">
     </div>
@@ -7,18 +6,37 @@
     <div class="admin-panel-title">Админ-панель</div>
 
     <div class="button-group">
-        <button class="admin-button" onclick="location.href='/users/table'">
-            Таблица пользователей
-        </button>
-        <button class="admin-button" onclick="location.href='/register'">
-            Создать пользователя
-        </button>
-        <button class="admin-button" onclick="location.href='/leads/table'">
-            Таблицы заявок
-        </button>
-        <button class="admin-button" onclick="location.href='/leads/create'">
-            Создать заявку
-        </button>
+        @php
+            $user = auth()->user();
+            $showUsersTable = $user->hasRole('manager');
+            $showCreateUser = $user->hasRole('manager');
+            $showLeadsTable = $user->hasRole('manager') || $user->hasRole('partner') || $user->hasRole('applicant');
+            $showCreateLead = $user->hasRole('manager') || $user->hasRole('applicant');
+        @endphp
+
+        @if($showUsersTable)
+            <button class="admin-button" onclick="location.href='/users/table'">
+                Таблица пользователей
+            </button>
+        @endif
+
+        @if($showCreateUser)
+            <button class="admin-button" onclick="location.href='/users/create'">
+                Создать пользователя
+            </button>
+        @endif
+
+        @if($showLeadsTable)
+            <button class="admin-button" onclick="location.href='/leads/table'">
+                Таблицы заявок
+            </button>
+        @endif
+
+        @if($showCreateLead)
+            <button class="admin-button" onclick="location.href='/leads/create'">
+                Создать заявку
+            </button>
+        @endif
     </div>
 
     <script>

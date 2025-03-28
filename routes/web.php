@@ -2,17 +2,18 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', \App\Livewire\Home::class);
+Route::get('/', \App\Livewire\Home::class)->name('home');
 
 
 
 Route::get('/login', \App\Livewire\Login::class)->name('login');
 
-Route::get('/register', \App\Livewire\CreateUser::class);
+Route::get('/register', \App\Livewire\Register::class)->name('register');
 
 
 
-Route::get('/users/table', \App\Livewire\Users::class)->name('users.table')->middleware('auth');
+Route::get('/users/table', \App\Livewire\UsersTable::class)->name('users.table')->middleware('auth');
+Route::get('/users/create', \App\Livewire\CreateUser::class)->name('users.create')->middleware('auth');
 
 
 

@@ -45,6 +45,14 @@
             <button class="btn" onclick="location.href='/login'">Сменить аккаунт</button>
             <button class="btn" wire:click="logout">Выход</button>
         </div>
+        <div class="user-roles-container">
+            <div class="user-roles-title">Ваши роли:</div>
+            <div class="user-roles-badges">
+                @foreach(auth()->user()->getRoleNames() as $role)
+                    <span class="role-badge">{{ $role }}</span>
+                @endforeach
+            </div>
+        </div>
     @endif
 
     @include('customPages.homePage.home-page-styles')

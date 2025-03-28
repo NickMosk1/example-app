@@ -18,7 +18,7 @@ class Login extends Component
         ]);
 
         if (Auth::attempt(['email' => $this->email, 'password' => $this->password])) {
-            return redirect()->route('admin.panel');
+            return redirect()->route('home');
         } else {
             session()->flash('error', 'Такого аккаунта не существует! Пожалуйста, повторите попытку авторизации.');
         }

@@ -5,36 +5,43 @@ namespace App\Livewire;
 use App\Models\User;
 use Livewire\Component;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class Register extends Component
 {
     public $name;
     public $email;
     public $password;
+    public $password_confirmation;
 
     public function render()
     {
-        return view('customPages.createUserFormPage.create-user-form-page')->layout('components.layouts.customLayout.custom-layout');
+        return view('customPages.registerPage.register-page')
+            ->layout('components.layouts.customLayout.custom-layout', [
+                'title' => 'Регистрация'
+            ]);
     }
 
-    public function createUser()
+    public function register()
     {
         $this->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:1',
+            'password' => 'required|string|min:8|confirmed',
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $this->name,
             'email' => $this->email,
             'password' => Hash::make($this->password),
         ]);
 
-        $this->name = '';
-        $this->email = '';
-        $this->password = '';
+        $user->assignRole('applicant');
 
-        session()->flash('success', 'Пользователь успешно зарегистрирован.');
+        $this->reset(['name', 'email', 'password', 'password_confirmation']);
+
+        session()->flash('success', 'Регистрация прошла успешно! Теперь вы можете войти в систему.');
+        
+        return redirect()->route('login');
     }
 }

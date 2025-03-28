@@ -97,4 +97,53 @@
         font-size: 1em;
         color: {{$colors['DARK_GRAY']}};
     }
+    .user-roles-container {
+        margin-top: 20px;
+        text-align: center;
+        padding: 15px;
+        background-color: {{ $colors['WHITE'] }};
+        border-radius: 10px;
+        width: 80%;
+        max-width: 600px;
+        box-shadow: 0 2px 4px {{ $colors['LIGHT_GRAY'] }};
+        transition: all 0.3s ease;
+        cursor: default;
+    }
+    .user-roles-container:hover {
+        box-shadow: 0 4px 12px {{ $colors['GREEN'] }};
+    }
+    .user-roles-title {
+        color: {{ $colors['DEFAULT_GRAY'] }};
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.2em;
+        margin-bottom: 10px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+    .user-roles-container:hover .user-roles-title {
+        color: {{ $colors['GREEN'] }};
+    }
+    .user-roles-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+    }
+    .role-badge {
+        padding: 8px 15px;
+        background-color: {{ $colors['GREEN'] }};
+        color: {{ $colors['WHITE'] }};
+        border-radius: 20px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.9em;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        cursor: default;
+    }
+    .role-badge:hover {
+        transform: translateY(-2px);
+        background-color: {{ $colors['GREEN_HOVER'] }};
+        box-shadow: 0 2px 4px {{ $colors['LIGHT_GRAY'] }};
+        cursor: default;
+    }
 </style>

@@ -5,32 +5,35 @@
     
     <div class="account-title">Мой аккаунт</div>
 
-    @if(session('success'))
-        <div class="alert-success">{{ session('success') }}</div>
+    @if($successMessage)
+        <div class="alert alert-success">
+            {{ $successMessage }}
+        </div>
     @endif
 
-    <form action="{{ route('account.update') }}" method="POST">
-        @csrf
-        @method('PUT')
+    @error('name') <div class="alert alert-error">{{ $message }}</div> @enderror
+    @error('email') <div class="alert alert-error">{{ $message }}</div> @enderror
+    @error('password') <div class="alert alert-error">{{ $message }}</div> @enderror
 
+    <form wire:submit.prevent="updateAccount">
         <div>
             <label for="name">Имя:</label>
-            <input type="text" id="name" name="name" value="{{ $user->name }}" required>
+            <input type="text" id="name" wire:model="name" required>
         </div>
 
         <div>
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email" value="{{ $user->email }}" required>
+            <input type="email" id="email" wire:model="email" required>
         </div>
 
         <div>
             <label for="password">Новый пароль:</label>
-            <input type="password" id="password" name="password">
+            <input type="password" id="password" wire:model="password">
         </div>
 
         <div>
             <label for="password_confirmation">Подтвердите пароль:</label>
-            <input type="password" id="password_confirmation" name="password_confirmation">
+            <input type="password" id="password_confirmation" wire:model="password_confirmation">
         </div>
 
         <button type="submit" class="account-button">Сохранить изменения</button>

@@ -15,6 +15,19 @@ class Account extends Component
     public $password_confirmation;
     public $successMessage = null;
 
+    protected function rules()
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users')->ignore(Auth::id())
+            ],
+            'password' => 'nullable|min:6|confirmed'
+        ];
+    }
+
     public function mount()
     {
         $this->user = Auth::user();
@@ -24,15 +37,7 @@ class Account extends Component
 
     public function updateAccount()
     {
-        $this->validate([
-            'name' => 'required|string|max:255',
-            'email' => [
-                'required',
-                'email',
-                Rule::unique('users')->ignore($this->user->id)
-            ],
-            'password' => 'nullable|min:6|confirmed'
-        ]);
+        $this->validate();
 
         $updateData = [
             'name' => $this->name,
@@ -44,10 +49,10 @@ class Account extends Component
         }
 
         $this->user->update($updateData);
-
         $this->successMessage = 'Данные успешно обновлены!';
-        $this->password = '';
-        $this->password_confirmation = '';
+        $this->reset(['password', 'password_confirmation']);
+        
+        Auth::setUser($this->user->fresh());
     }
 
     public function render()
