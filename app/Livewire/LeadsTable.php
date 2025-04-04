@@ -17,7 +17,7 @@ class LeadsTable extends Component
     public $quantity;              // Количество продуктов
     public $type;                  // Описание продукта
     public $status;                // Статус заявки
-
+    public $countLeads;
     // Метод для редактирования
     public function edit($leadId)
     {
@@ -87,4 +87,13 @@ class LeadsTable extends Component
             'leads' => $leads,
         ])->layout('components.layouts.customLayout.custom-layout');
     }
+
+    public function getCountLeads(){
+        
+        $this->countLeads =  Lead::query()->count();
+    }
+
+    // public function sendMail(){
+    //     Mail::
+    // }
 }

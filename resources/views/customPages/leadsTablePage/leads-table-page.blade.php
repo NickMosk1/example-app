@@ -1,5 +1,8 @@
 <div>
     <table class="lead-table">
+        <div wire:poll="getCountLeads">
+            <h2>Кол-во заявок {{$countLeads}}</h2>
+        </div>
         <thead>
             <tr>
                 <th>ID</th>
@@ -12,7 +15,7 @@
                 <th>Действия</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody wire:poll.1000ms>
             @foreach($leads as $lead)
                 <tr>
                     <td>{{ $lead->id }}</td>
