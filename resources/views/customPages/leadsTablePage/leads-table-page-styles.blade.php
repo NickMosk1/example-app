@@ -312,7 +312,6 @@
         to { transform: translateY(0); opacity: 1; }
     }
 
-    /* Эффекты при наведении на кнопки */
     .modal-save-button:hover + .modal-image-container .modal-image,
     .modal-save-button:hover ~ .modal-title {
         color: {{$colors['GREEN']}};

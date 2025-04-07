@@ -30,3 +30,6 @@ Route::get('/adminPanel', \App\Livewire\AdminPanel::class)->name('admin.panel')-
 Route::get('/account', \App\Livewire\Account::class)->name('account')->middleware('auth');
 
 Route::put('/account/update', \App\Livewire\Account::class)->name('account.update')->middleware('auth');
+
+
+Route::get('/leads/sources/table', \App\Livewire\LeadSourcesTable::class)->name('leads.sources.table')->middleware('auth');

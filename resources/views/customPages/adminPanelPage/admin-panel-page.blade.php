@@ -12,6 +12,7 @@
             $showCreateUser = $user->hasRole('manager');
             $showLeadsTable = $user->hasRole('manager') || $user->hasRole('partner') || $user->hasRole('applicant');
             $showCreateLead = $user->hasRole('manager') || $user->hasRole('applicant');
+            $showLeadSourcesTable = $user->hasRole('manager');
         @endphp
 
         @if($showUsersTable)
@@ -35,6 +36,12 @@
         @if($showCreateLead)
             <button class="admin-button" onclick="location.href='/leads/create'">
                 Создать заявку
+            </button>
+        @endif
+
+        @if($showLeadSourcesTable)
+            <button class="admin-button" onclick="location.href='/leads/sources/table'">
+                Таблица источников
             </button>
         @endif
     </div>

@@ -6,9 +6,11 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>ФИО заявителя</th>
                 <th>Количество</th>
                 <th>Описание</th>
+                <th>Источник</th>
+                <th>Цена покупки</th>
+                <th>Цена продажи</th>
                 <th>Статус</th>
                 <th>Создана</th>
                 <th>Обновлена</th>
@@ -19,9 +21,32 @@
             @foreach($leads as $lead)
                 <tr>
                     <td>{{ $lead->id }}</td>
-                    <td>{{ $lead->full_name }}</td>
                     <td>{{ $lead->quantity }}</td>
                     <td>{{ $lead->type }}</td>
+                    <td>
+                        @if($lead->leadSource)
+                            {{ $lead->leadSource->name }}
+                            @if($lead->leadSource->is_native)
+                                <span class="native-badge">(нативный)</span>
+                            @endif
+                        @else
+                            <span class="no-source">Не указан</span>
+                        @endif
+                    </td>
+                    <td class="price-cell">
+                        @if($lead->purchase_price)
+                            {{ number_format($lead->purchase_price, 2) }} ₽
+                        @else
+                            <span class="no-price">—</span>
+                        @endif
+                    </td>
+                    <td class="price-cell">
+                        @if($lead->sale_price)
+                            {{ number_format($lead->sale_price, 2) }} ₽
+                        @else
+                            <span class="no-price">—</span>
+                        @endif
+                    </td>
                     <td class="status-cell">
                         <span class="status-badge status-{{ str_replace(' ', '_', strtolower($lead->status)) }}">
                             @switch($lead->status)
