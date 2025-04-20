@@ -1,25 +1,38 @@
 
 <style>
-    /* Основные стили таблицы */
+    .sources-amount {
+        color: {{$colors['GREEN']}};
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.2em;
+        margin-top: 20px;
+        margin-bottom: 30px;
+        transition: all 0.3s ease;
+    }
+
+    .sources-amount span {
+        font-weight: bold;
+    }
+
     .sources-table {
         width: 100%;
+        min-width: 900px;
         border-collapse: collapse;
         margin-top: 20px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 4px {{$colors['LIGHT_GRAY']}};
         border-radius: 8px;
         overflow: hidden;
         font-family: 'Montserrat', sans-serif;
     }
 
     .sources-table thead {
-        background-color: {{$colors['BLUE']}};
+        background-color: {{$colors['GREEN']}};
         color: {{$colors['WHITE']}};
         font-weight: bold;
     }
 
     .sources-table th, .sources-table td {
-        padding: 12px 15px;
-        text-align: left;
+        padding: 12px;
+        text-align: center;
         vertical-align: middle;
     }
 
@@ -27,37 +40,43 @@
         color: {{$colors['DARK_GRAY']}};
         background-color: {{$colors['WHITE']}};
         transition: all 0.3s ease;
-        border-bottom: 1px solid {{$colors['LIGHT_GRAY']}};
-    }
-
-    .sources-table tbody tr:last-child {
-        border-bottom: none;
     }
 
     .sources-table tbody tr:hover {
-        background-color: {{$colors['GREEN']}};
+        color: {{$colors['WHITE']}};
+        background-color: {{$colors['GREEN_HOVER']}};
     }
 
-    /* Бейджи типов источников */
+    .sources-table tbody tr:nth-child(even) {
+        background-color: {{$colors['LIGHT_GREEN']}};
+    }
+
+    .sources-table tbody tr:nth-child(even):hover {
+        background-color: {{$colors['GREEN_HOVER']}};
+    }
+
     .source-type-badge {
         display: inline-block;
-        padding: 5px 10px;
-        border-radius: 15px;
+        padding: 5px 12px;
+        border-radius: 20px;
         font-size: 0.8em;
         font-weight: bold;
+        color: {{$colors['WHITE']}};
     }
 
     .source-type-badge.native {
-        background-color: {{$colors['GREEN']}};
-        color: {{$colors['WHITE']}};
+        background-color: {{$colors['BLUE']}};
     }
 
     .source-type-badge.external {
-        background-color: {{$colors['ORANGE']}};
-        color: {{$colors['WHITE']}};
+        background-color: {{$colors['PURPLE']}};
     }
 
-    /* Контактная информация */
+    .no-price {
+        color: {{$colors['LIGHT_GRAY']}};
+        font-style: italic;
+    }
+
     .contacts-info {
         display: flex;
         flex-direction: column;
@@ -69,128 +88,161 @@
         align-items: center;
         gap: 5px;
         font-size: 0.9em;
+        justify-content: center;
     }
 
-    /* Кнопка статистики */
+    .actions-cell {
+        padding: 0.5rem;
+        text-align: center;
+    }
+
     .btn-stats {
-        background-color: {{$colors['PURPLE']}};
+        padding: 8px 15px;
+        background-color: {{$colors['GREEN']}};
         color: {{$colors['WHITE']}};
         border: none;
         border-radius: 5px;
-        padding: 8px 12px;
         cursor: pointer;
         transition: all 0.3s ease;
+        font-family: 'Montserrat', sans-serif;
         display: flex;
         align-items: center;
         gap: 5px;
-        font-size: 0.9em;
     }
 
     .btn-stats:hover {
-        background-color: {{$colors['RED']}};
+        background-color: {{$colors['GREEN_HOVER']}};
         transform: translateY(-2px);
     }
 
     /* Модальное окно статистики */
-    .stats-modal-overlay {
+    .modal-overlay {
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: rgba(0, 0, 0, 0.7);
+        background-color: rgba(0, 0, 0, 0.5);
         display: flex;
         align-items: center;
         justify-content: center;
         z-index: 1000;
-        backdrop-filter: blur(5px);
     }
 
-    .stats-modal-content {
+    .modal-content {
         width: 90%;
         max-width: 1200px;
         max-height: 90vh;
+        overflow-y: auto;
+        margin: 20px auto;
+        padding: 20px;
         background-color: {{$colors['WHITE']}};
         border-radius: 10px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        overflow-y: auto;
-        animation: modalFadeIn 0.3s ease-out;
+        box-shadow: 0 4px 4px {{$colors['LIGHT_GRAY']}};
+        animation: modalEnter 0.3s ease-out;
     }
 
-    .stats-modal-header {
+    .modal-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 20px;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
         border-bottom: 1px solid {{$colors['LIGHT_GRAY']}};
-        background-color: {{$colors['BLUE']}};
-        color: {{$colors['WHITE']}};
+    }
+
+    .modal-title {
+        color: {{$colors['DARK_GRAY']}};
+        font-family: 'Montserrat', sans-serif;
+        font-weight: bold;
+        margin: 0;
     }
 
     .close-modal {
         background: none;
         border: none;
-        color: {{$colors['WHITE']}};
         font-size: 1.5em;
         cursor: pointer;
-        transition: transform 0.3s ease;
+        color: {{$colors['DARK_GRAY']}};
+        transition: all 0.3s ease;
     }
 
     .close-modal:hover {
-        transform: rotate(90deg);
+        color: {{$colors['RED']}};
+        transform: scale(1.2);
     }
 
-    /* Сетка статистики */
     .stats-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(2, 1fr);
         gap: 20px;
-        padding: 20px;
     }
 
     .stats-card {
         background-color: {{$colors['WHITE']}};
         border-radius: 8px;
         padding: 15px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 4px {{$colors['LIGHT_GRAY']}};
     }
 
     .stats-card h4 {
+        color: {{$colors['GREEN']}};
+        font-family: 'Montserrat', sans-serif;
         margin-top: 0;
         margin-bottom: 15px;
-        color: {{$colors['DARK_GRAY']}};
+        padding-bottom: 10px;
         border-bottom: 1px solid {{$colors['LIGHT_GRAY']}};
-        padding-bottom: 5px;
     }
 
     .stats-row {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
+        font-family: 'Montserrat', sans-serif;
     }
 
     .stats-row .value {
         font-weight: bold;
+        color: {{$colors['DARK_GRAY']}};
     }
 
-    .profit .value.positive {
+    .stats-row.profit .value {
+        font-size: 1.1em;
+    }
+
+    .stats-row.profit .value.positive {
         color: {{$colors['GREEN']}};
     }
 
-    .profit .value.negative {
+    .stats-row.profit .value.negative {
         color: {{$colors['RED']}};
     }
 
-    /* Стили для графиков */
     .chart-container {
+        position: relative;
+        padding: 15px;
+    }
+
+    .chart-wrapper {
+        position: relative;
+        width: 100%;
         min-height: 300px;
     }
 
-    /* Стили для списка топ заявок */
+    canvas {
+        width: 100% !important;
+        height: auto !important;
+    }
+
     .leads-list {
         display: flex;
         flex-direction: column;
         gap: 10px;
+    }
+
+    .leads-list.scrollable {
+        max-height: 300px;
+        overflow-y: auto;
     }
 
     .lead-item {
@@ -198,12 +250,15 @@
         justify-content: space-between;
         align-items: center;
         padding: 10px;
-        background-color: {{$colors['LIGHT_GRAY']}};
+        background-color: {{$colors['LIGHT_GREEN']}};
         border-radius: 5px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.9em;
     }
 
     .lead-id {
         font-weight: bold;
+        color: {{$colors['DARK_GRAY']}};
     }
 
     .lead-profit {
@@ -211,8 +266,74 @@
         font-weight: bold;
     }
 
-    @keyframes modalFadeIn {
-        from { opacity: 0; transform: translateY(-20px); }
-        to { opacity: 1; transform: translateY(0); }
+    .lead-dates {
+        color: {{$colors['DEFAULT_GRAY']}};
+        font-size: 0.8em;
+    }
+
+    .lead-status {
+        padding: 3px 8px;
+        border-radius: 12px;
+        font-size: 0.8em;
+        font-weight: bold;
+        color: {{$colors['WHITE']}};
+    }
+
+    .lead-status.pending {
+        background-color: {{$colors['ORANGE']}};
+    }
+
+    .lead-status.in-progress {
+        background-color: {{$colors['BLUE']}};
+    }
+
+    .lead-status.sold-to-partner {
+        background-color: {{$colors['GREEN']}};
+    }
+
+    .lead-status.cancelled {
+        background-color: {{$colors['RED']}};
+    }
+
+    @keyframes modalEnter {
+        from { transform: translateY(-20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Пагинация */
+    .pagination {
+        display: flex;
+        gap: 5px;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .pagination a {
+        padding: 10px 15px;
+        background-color: {{$colors['GREEN']}};
+        color: {{$colors['WHITE']}};
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+
+    .pagination a:hover {
+        background-color: {{$colors['GREEN_HOVER']}};
+    }
+
+    .pagination .active {
+        background-color: {{$colors['GREEN_HOVER']}};
+        font-weight: bold;
+    }
+
+    .pagination .disabled, .pagination .disabled:hover {
+        background-color: {{$colors['WHITE']}};
+        cursor: not-allowed;
+    }
+
+    @media (max-width: 1200px) {
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
     }
 </style>

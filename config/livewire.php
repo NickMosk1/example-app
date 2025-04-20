@@ -156,5 +156,11 @@ return [
     |
     */
 
+    'upload_disk' => 'local', // или 'public' в зависимости от ваших нужд
+    'temporary_file_upload' => [
+        'disk' => 'local',
+        'rules' => ['file', 'mimes:xlsx,xls,csv', 'max:10240'], // 10MB max
+    ],
+
     'pagination_theme' => 'tailwind',
 ];

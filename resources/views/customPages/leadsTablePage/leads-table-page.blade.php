@@ -1,8 +1,76 @@
 <div>
-    <table class="lead-table">
-        <div wire:poll="getCountLeads">
-            <h2>Кол-во заявок {{$countLeads}}</h2>
+    <div class="table-actions">
+        <div class="import-export-buttons">
+            <!-- Кнопка импорта -->
+            <button wire:click="$set('showImportModal', true)" class="admin-button">
+                <span>Импорт из Excel</span>
+            </button>
+            
+            <!-- Кнопка экспорта -->
+            <button wire:click="export" class="admin-button" style="background-color: {{$colors['BLUE']}}">
+                <span>Экспорт в Excel</span>
+            </button>
         </div>
+    </div>
+
+    <!-- Модальное окно импорта -->
+    @if($showImportModal)
+    <div class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-image-container">
+                    <img class="modal-image admin-modal-image" src="{{ asset('additional/adminPanel.JPG') }}" alt="Импорт">
+                </div>
+                <h3 class="modal-title">Импорт заявок</h3>
+                <button class="modal-close" wire:click="$set('showImportModal', false)">&times;</button>
+            </div>
+            
+            <form wire:submit.prevent="import">
+                <div class="file-upload-wrapper">
+                    <label class="file-upload-label">
+                        <input 
+                            type="file" 
+                            wire:model="importFile" 
+                            accept=".xlsx,.xls,.csv"
+                            class="file-upload-input"
+                        >
+                        <span class="file-upload-text">Выберите файл Excel</span>
+                        <span class="file-upload-button">Обзор</span>
+                    </label>
+                    @error('importFile') 
+                        <span class="error-message">{{ $message }}</span> 
+                    @enderror
+                </div>
+                
+                <div class="modal-actions">
+                    <button 
+                        type="submit" 
+                        class="modal-save-button"
+                        wire:loading.attr="disabled"
+                        wire:target="importFile"
+                    >
+                        <span wire:loading wire:target="importFile" class="loading-spinner">
+                            <svg class="spinner-icon" viewBox="0 0 50 50">
+                                <circle class="spinner-path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+                            </svg>
+                            Идет загрузка...
+                        </span>
+                        <span wire:loading.remove wire:target="importFile">Импортировать</span>
+                    </button>
+                    <button 
+                        type="button" 
+                        class="modal-cancel-button" 
+                        wire:click="$set('showImportModal', false)"
+                    >
+                        Отмена
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    @endif
+
+    <table class="lead-table">
         <thead>
             <tr>
                 <th>ID</th>

@@ -320,4 +320,119 @@
     .modal-save-button:hover + .modal-image-container .modal-image {
         box-shadow: 0 4px 12px {{$colors['GREEN']}};
     }
+
+    .import-export-buttons {
+        display: flex;
+        gap: 15px;
+    }
+
+    .admin-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 24px;
+        background-color: {{$colors['GREEN']}};
+        color: {{$colors['WHITE']}};
+        font-weight: bold;
+        font-family: 'Montserrat', sans-serif;
+        border: none;
+        border-radius: 5px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .admin-button:hover {
+        background-color: {{$colors['GREEN_HOVER']}};
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .button-icon {
+        width: 18px;
+        height: 18px;
+    }
+
+    .file-upload-wrapper {
+        margin: 20px 0;
+    }
+
+    .file-upload-label {
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+
+    .file-upload-input {
+        display: none;
+    }
+
+    .file-upload-text {
+        flex-grow: 1;
+        padding: 12px;
+        background-color: {{$colors['WHITE']}};
+        border: 1px solid {{$colors['LIGHT_GRAY']}};
+        border-right: none;
+        border-radius: 5px 0 0 5px;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .file-upload-button {
+        padding: 12px 20px;
+        background-color: {{$colors['GREEN']}};
+        color: {{$colors['WHITE']}};
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .file-upload-button:hover {
+        background-color: {{$colors['GREEN_HOVER']}};
+    }
+
+    /* Лоадер */
+    .loading-spinner {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .spinner-icon {
+        width: 18px;
+        height: 18px;
+        animation: rotate 1.4s linear infinite;
+    }
+
+    .spinner-path {
+        stroke: {{$colors['WHITE']}};
+        stroke-linecap: round;
+        animation: dash 1.4s ease-in-out infinite;
+    }
+
+    @keyframes rotate {
+        100% { transform: rotate(360deg); }
+    }
+
+    @keyframes dash {
+        0% { stroke-dasharray: 1, 150; stroke-dashoffset: 0; }
+        50% { stroke-dasharray: 90, 150; stroke-dashoffset: -35; }
+        100% { stroke-dasharray: 90, 150; stroke-dashoffset: -124; }
+    }
+
+    .modal-header {
+        position: relative;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+    }
+
+    .modal-close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: none;
+        border: none;
+        font-size: 24px;
+        color: {{$colors['DARK_GRAY']}};
+        cursor: pointer;
+    }
 </style>

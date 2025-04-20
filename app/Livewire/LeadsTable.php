@@ -7,10 +7,14 @@ use App\Models\Lead;
 use App\Models\LeadSource;
 use App\Models\Partner;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\LeadsExport;
+use App\Imports\LeadsImport;
 
 class LeadsTable extends Component
 {
-    use WithPagination;
+    use WithPagination, WithFileUploads;
 
     public $showEditModal = false;
     public $editingLeadId = null;
@@ -21,6 +25,8 @@ class LeadsTable extends Component
     public $countLeads;
     public $leadSourceId;
     public $partnerId;
+    public $importFile;
+    public $showImportModal = false;
     
     public $leadSources;
     public $partners;
@@ -104,9 +110,64 @@ class LeadsTable extends Component
         ])->layout('components.layouts.customLayout.custom-layout');
     }
 
-
     public function getCountLeads()
     {
         $this->countLeads = Lead::count();
+    }
+
+    public function import()
+    {
+        $this->validate([
+            'importFile' => 'required|file|mimes:xlsx,xls,csv|max:10240'
+        ]);
+        
+        try {
+            Excel::import(new LeadsImport, $this->importFile->getRealPath());
+            
+            $this->reset('importFile');
+            $this->showImportModal = false;
+            $this->getCountLeads();
+            
+            session()->flash('message', 'Заявки успешно импортированы!');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Ошибка при импорте: ' . $e->getMessage());
+        }
+    }
+
+    public function export($format = 'xlsx')
+    {
+        $fileName = 'leads_' . date('Y-m-d') . '.' . $format;
+        
+        if ($format === 'csv') {
+            return Excel::download(new LeadsExport, $fileName, \Maatwebsite\Excel\Excel::CSV, [
+                'Content-Type' => 'text/csv; charset=UTF-8',
+            ]);
+        }
+        
+        return Excel::download(new LeadsExport, $fileName);
+    }
+
+    private function getStatusText($status)
+    {
+        $statuses = [
+            'pending' => 'В ожидании',
+            'in_progress' => 'В работе',
+            'sold_to_partner' => 'Продана партнеру',
+            'cancelled' => 'Отменена',
+        ];
+        
+        return $statuses[$status] ?? $status;
+    }
+
+    public function showImportModal()
+    {
+        $this->showImportModal = true;
+        $this->resetErrorBag();
+        $this->importFile = null;
+    }
+
+    public function closeImportModal()
+    {
+        $this->showImportModal = false;
     }
 }

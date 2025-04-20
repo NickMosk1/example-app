@@ -12,6 +12,8 @@
         @include('components.layouts.customLayout.custom-layout-styles')
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+        <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     </head>
     <body>
         <header>
