@@ -16,7 +16,7 @@
                 <th>Действия</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody wire:poll.1000ms>
             @foreach($sources as $source)
                 <tr>
                     <td>{{ $source->id }}</td>
@@ -76,7 +76,7 @@
                 </div>
                 
                 <div class="stats-grid">
-                    <!-- Общая статистика -->
+
                     <div class="stats-card">
                         <h4>Общая статистика</h4>
                         <div class="stats-row">
@@ -210,8 +210,8 @@
 
     @include('customPages.leadSourcesTablePage.lead-sources-table-page-styles')
 
-     @push('scripts')
-    <!-- Убедитесь, что Alpine загружается только один раз -->
+    @push('scripts')
+
     @if(!app()->environment('testing'))
         <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     @endif

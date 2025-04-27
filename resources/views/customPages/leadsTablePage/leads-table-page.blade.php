@@ -1,19 +1,16 @@
 <div>
     <div class="table-actions">
         <div class="import-export-buttons">
-            <!-- Кнопка импорта -->
             <button wire:click="$set('showImportModal', true)" class="admin-button">
                 <span>Импорт из Excel</span>
             </button>
             
-            <!-- Кнопка экспорта -->
             <button wire:click="export" class="admin-button" style="background-color: {{$colors['BLUE']}}">
                 <span>Экспорт в Excel</span>
             </button>
         </div>
     </div>
 
-    <!-- Модальное окно импорта -->
     @if($showImportModal)
     <div class="modal-overlay">
         <div class="modal-content">
@@ -95,7 +92,7 @@
                         @if($lead->leadSource)
                             {{ $lead->leadSource->name }}
                             @if($lead->leadSource->is_native)
-                                <span class="native-badge">(нативный)</span>
+                                <span class="native-badge"></span>
                             @endif
                         @else
                             <span class="no-source">Не указан</span>
@@ -172,14 +169,8 @@
 
                 <form wire:submit.prevent="update">
                     <div>
-                        <label for="modal_full_name">ФИО заявителя:</label>
-                        <input type="text" id="modal_full_name" wire:model="full_name" required>
-                        @error('full_name') <span class="error-message">{{ $message }}</span> @enderror
-                    </div>
-                    
-                    <div>
                         <label for="modal_quantity">Количество:</label>
-                        <input type="number" id="modal_quantity" wire:model="quantity" required>
+                        <input type="number" id="modal_quantity" wire:model="quantity" required min="1">
                         @error('quantity') <span class="error-message">{{ $message }}</span> @enderror
                     </div>
                     
@@ -198,6 +189,40 @@
                             <option value="cancelled">Отменена</option>
                         </select>
                         @error('status') <span class="error-message">{{ $message }}</span> @enderror
+                    </div>
+                    
+                    <div>
+                        <label for="modal_purchase_price">Цена покупки (₽):</label>
+                        <input type="number" id="modal_purchase_price" wire:model="purchase_price" step="0.01" min="0">
+                        @error('purchase_price') <span class="error-message">{{ $message }}</span> @enderror
+                    </div>
+                    
+                    <div>
+                        <label for="modal_sale_price">Цена продажи (₽):</label>
+                        <input type="number" id="modal_sale_price" wire:model="sale_price" step="0.01" min="0">
+                        @error('sale_price') <span class="error-message">{{ $message }}</span> @enderror
+                    </div>
+                    
+                    <div>
+                        <label for="modal_lead_source_id">Источник:</label>
+                        <select id="modal_lead_source_id" wire:model="leadSourceId">
+                            <option value="">-- Не выбран --</option>
+                            @foreach($leadSources as $source)
+                                <option value="{{ $source->id }}">{{ $source->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('leadSourceId') <span class="error-message">{{ $message }}</span> @enderror
+                    </div>
+                    
+                    <div>
+                        <label for="modal_partner_id">Партнер:</label>
+                        <select id="modal_partner_id" wire:model="partnerId">
+                            <option value="">-- Не выбран --</option>
+                            @foreach($partners as $partner)
+                                <option value="{{ $partner->id }}">{{ $partner->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('partnerId') <span class="error-message">{{ $message }}</span> @enderror
                     </div>
                     
                     <div class="modal-actions">

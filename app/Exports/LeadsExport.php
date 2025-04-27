@@ -18,7 +18,6 @@ class LeadsExport implements FromCollection, WithHeadings, WithMapping
     {
         return [
             'ID',
-            'ФИО',
             'Количество',
             'Тип продукта',
             'Статус',
@@ -35,7 +34,6 @@ class LeadsExport implements FromCollection, WithHeadings, WithMapping
     {
         return [
             $lead->id,
-            $lead->full_name,
             $lead->quantity,
             $lead->type,
             $this->getStatusText($lead->status),

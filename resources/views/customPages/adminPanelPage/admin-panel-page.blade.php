@@ -5,7 +5,7 @@
 
     <div class="admin-panel-title">Админ-панель</div>
 
-    <div class="button-group">
+    <div class="admin-dashboard">
         @php
             $user = auth()->user();
             $showUsersTable = $user->hasRole('manager');
@@ -13,36 +13,89 @@
             $showLeadsTable = $user->hasRole('manager') || $user->hasRole('partner') || $user->hasRole('applicant');
             $showCreateLead = $user->hasRole('manager') || $user->hasRole('applicant');
             $showLeadSourcesTable = $user->hasRole('manager');
+            $showCreateLeadSource = $user->hasRole('manager');
+            $showPartnersTable = $user->hasRole('manager');
+            $showCreatePartner = $user->hasRole('manager');
         @endphp
+        
+        @if($showUsersTable || $showCreateUser)
+        <div class="admin-panel user-panel">
 
-        @if($showUsersTable)
-            <button class="admin-button" onclick="location.href='/users/table'">
-                Таблица пользователей
-            </button>
+            <h3 class="admin-panel-title">Пользователи</h3>
+            
+            <div class="button-group">
+                @if($showUsersTable)
+                    <button class="admin-button" onclick="location.href='/users/table'">
+                        Таблица пользователей
+                    </button>
+                @endif
+                @if($showCreateUser)
+                    <button class="admin-button" onclick="location.href='/users/create'">
+                        Создать пользователя
+                    </button>
+                @endif
+            </div>
+        </div>
         @endif
 
-        @if($showCreateUser)
-            <button class="admin-button" onclick="location.href='/users/create'">
-                Создать пользователя
-            </button>
+        @if($showLeadsTable || $showCreateLead)
+        <div class="admin-panel lead-panel">
+            
+            <h3 class="admin-panel-title">Заявки</h3>
+            
+            <div class="button-group">
+                @if($showLeadsTable)
+                    <button class="admin-button" onclick="location.href='/leads/table'">
+                        Таблица заявок
+                    </button>
+                @endif
+                @if($showCreateLead)
+                    <button class="admin-button" onclick="location.href='/leads/create'">
+                        Создать заявку
+                    </button>
+                @endif
+            </div>
+        </div>
         @endif
 
-        @if($showLeadsTable)
-            <button class="admin-button" onclick="location.href='/leads/table'">
-                Таблицы заявок
-            </button>
+        @if($showLeadSourcesTable || $showCreateLeadSource)
+        <div class="admin-panel source-panel">
+            
+            <h3 class="admin-panel-title">Источники</h3>
+            
+            <div class="button-group">
+                @if($showLeadSourcesTable)
+                    <button class="admin-button" onclick="location.href='/leads/sources/table'">
+                        Таблица источников
+                    </button>
+                @endif
+                @if($showCreateLeadSource)
+                    <button class="admin-button" onclick="location.href='/leads/sources/create'">
+                        Создать источник
+                    </button>
+                @endif
+            </div>
+        </div>
         @endif
 
-        @if($showCreateLead)
-            <button class="admin-button" onclick="location.href='/leads/create'">
-                Создать заявку
-            </button>
-        @endif
-
-        @if($showLeadSourcesTable)
-            <button class="admin-button" onclick="location.href='/leads/sources/table'">
-                Таблица источников
-            </button>
+        @if($showPartnersTable || $showCreatePartner)
+        <div class="admin-panel partner-panel">
+            
+            <h3 class="admin-panel-title">Партнеры</h3>
+            
+            <div class="button-group">
+                @if($showPartnersTable)
+                    <button class="admin-button" onclick="location.href='/partners/table'">
+                        Таблица партнеров
+                    </button>
+                @endif
+                @if($showCreatePartner)
+                    <button class="admin-button" onclick="location.href='/partners/create'">
+                        Создать партнера
+                    </button>
+                @endif
+            </div>
+        </div>
         @endif
     </div>
 

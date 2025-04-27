@@ -13,7 +13,13 @@ Route::get('/register', \App\Livewire\Register::class)->name('register');
 
 
 Route::get('/users/table', \App\Livewire\UsersTable::class)->name('users.table')->middleware('auth');
+
 Route::get('/users/create', \App\Livewire\CreateUser::class)->name('users.create')->middleware('auth');
+
+
+Route::get('/partners/table', \App\Livewire\PartnersTable::class)->name('partners.table')->middleware('auth');
+
+Route::get('/partners/create', \App\Livewire\CreatePartner::class)->name('partners.create')->middleware('auth');
 
 
 
@@ -33,3 +39,5 @@ Route::put('/account/update', \App\Livewire\Account::class)->name('account.updat
 
 
 Route::get('/leads/sources/table', \App\Livewire\LeadSourcesTable::class)->name('leads.sources.table')->middleware('auth');
+
+Route::get('/leads/sources/create', \App\Livewire\LeadSourcesTable::class)->name('leads.sources.create')->middleware('auth');

@@ -18,13 +18,14 @@ class LeadsTable extends Component
 
     public $showEditModal = false;
     public $editingLeadId = null;
-    public $full_name;
     public $quantity;
     public $type;
     public $status;
     public $countLeads;
     public $leadSourceId;
     public $partnerId;
+    public $purchase_price;
+    public $sale_price;
     public $importFile;
     public $showImportModal = false;
     
@@ -39,13 +40,14 @@ class LeadsTable extends Component
 
     public function edit($leadId)
     {
-        $lead = Lead::findOrFail($leadId);
+        $lead = Lead::with(['leadSource', 'partner'])->findOrFail($leadId);
         
         $this->editingLeadId = $leadId;
-        $this->full_name = $lead->full_name;
         $this->quantity = $lead->quantity;
         $this->type = $lead->type;
         $this->status = $lead->status;
+        $this->purchase_price = $lead->purchase_price;
+        $this->sale_price = $lead->sale_price;
         $this->leadSourceId = $lead->lead_source_id;
         $this->partnerId = $lead->partner_id;
         
@@ -55,25 +57,38 @@ class LeadsTable extends Component
     public function update()
     {
         $this->validate([
-            'full_name' => 'required|min:3',
             'quantity' => 'required|integer|min:1',
             'type' => 'required|min:5',
             'status' => 'required|in:pending,in_progress,sold_to_partner,cancelled',
+            'purchase_price' => 'nullable|numeric|min:0',
+            'sale_price' => 'nullable|numeric|min:0',
             'leadSourceId' => 'nullable|exists:lead_sources,id',
             'partnerId' => 'nullable|exists:partners,id',
         ]);
 
-        Lead::find($this->editingLeadId)->update([
-            'full_name' => $this->full_name,
+        $lead = Lead::findOrFail($this->editingLeadId);
+        
+        if ($lead->lead_source_id !== $this->leadSourceId) {
+            if ($lead->lead_source_id) {
+                $lead->leadSource()->decrement('total_leads');
+            }
+            if ($this->leadSourceId) {
+                LeadSource::find($this->leadSourceId)->increment('total_leads');
+            }
+        }
+
+        $lead->update([
             'quantity' => $this->quantity,
             'type' => $this->type,
             'status' => $this->status,
+            'purchase_price' => $this->purchase_price,
+            'sale_price' => $this->sale_price,
             'lead_source_id' => $this->leadSourceId,
             'partner_id' => $this->partnerId,
         ]);
 
         $this->showEditModal = false;
-        session()->flash('message', 'Заявка успешно обновлена');
+        session()->flash('modal_success', 'Заявка успешно обновлена');
     }
 
     public function confirmDelete($leadId)
@@ -81,7 +96,6 @@ class LeadsTable extends Component
         $lead = Lead::find($leadId);
 
         if ($lead) {
-            // Уменьшаем счетчик заявок у источника
             if ($lead->lead_source_id) {
                 $lead->leadSource()->decrement('total_leads');
             }
@@ -92,12 +106,16 @@ class LeadsTable extends Component
             session()->flash('error', 'Заявка не найдена');
         }
     }
-
+    
     public function closeModal()
     {
         $this->showEditModal = false;
         $this->editingLeadId = null;
-        $this->reset(['full_name', 'quantity', 'type', 'status', 'leadSourceId', 'partnerId']);
+        $this->reset([
+            'quantity', 'type', 'status', 
+            'purchase_price', 'sale_price',
+            'leadSourceId', 'partnerId'
+        ]);
         $this->resetValidation();
     }
 

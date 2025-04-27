@@ -1,39 +1,35 @@
 <div>
-    <div class="users-amount">Число зарегистрированных пользователей: {{ $users->total() }}</div>
+    <div class="partners-amount">Количество партнеров: {{ $partners->total() }}</div>
 
-    <table class="user-table">
+    <table class="partner-table">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Имя</th>
+                <th>Название</th>
                 <th>Email</th>
-                <th>Роли</th>
+                <th>Телефон</th>
+                <th>Количество заявок</th>
                 <th>Дата регистрации</th>
                 <th>Обновлен</th>
                 <th>Действия</th>
             </tr>
         </thead>
         <tbody wire:poll.1000ms>
-            @foreach($users as $user)
+            @foreach($partners as $partner)
                 <tr>
-                    <td>{{ $user->id }}</td>
-                    <td>{{ $user->name }}</td>
-                    <td>{{ $user->email }}</td>
-                    <td class="roles-cell">
-                        @foreach($user->roles as $role)
-                            <span class="role-chip role-{{ str_replace(' ', '_', strtolower($role->name)) }}">
-                                {{ $role->name }}
-                            </span>
-                        @endforeach
-                    </td>
-                    <td>{{ $user->created_at->format('d.m.Y H:i') }}</td>
-                    <td>{{ $user->updated_at->format('d.m.Y H:i') }}</td>
+                    <td>{{ $partner->id }}</td>
+                    <td>{{ $partner->name }}</td>
+                    <td>{{ $partner->email }}</td>
+                    <td>{{ $partner->phone }}</td>
+                    <td>{{ $partner->leads_count }}</td>
+                    <td>{{ $partner->created_at->format('d.m.Y H:i') }}</td>
+                    <td>{{ $partner->updated_at->format('d.m.Y H:i') }}</td>
                     <td class="actions-cell">
                         <div class="record-button-container">
-                            <button class="btn-edit" wire:click="edit({{ $user->id }})">
+                            <button class="btn-edit" wire:click="edit({{ $partner->id }})">
                                 <img class="edit-image" src="{{ asset('additional/edit3.JPG') }}" alt="Редактирование">
                             </button>
-                            <button class="btn-delete" wire:click="confirmDelete({{ $user->id }})">
+                            <button class="btn-delete" wire:click="confirmDelete({{ $partner->id }})">
                                 <img class="delete-image" src="{{ asset('additional/delete2.JPG') }}" alt="Удаление">
                             </button> 
                         </div>
@@ -43,16 +39,16 @@
         </tbody>
     </table>
 
-    {{ $users->links() }}
+    {{ $partners->links() }}
 
     @if($showEditModal)
         <div class="modal-overlay">
             <div class="modal-content">
                 <div class="modal-image-container">
-                    <img class="modal-image" src="{{ asset('additional/account.JPG') }}" alt="Редактирование пользователя">
+                    <img class="modal-image" src="{{ asset('additional/account.JPG') }}" alt="Редактирование партнера">
                 </div>
                 
-                <div class="modal-title">Редактирование пользователя #{{ $editingUserId }}</div>
+                <div class="modal-title">Редактирование партнера #{{ $editingPartnerId }}</div>
 
                 @if (session()->has('modal_success'))
                     <div class="success">{{ session('modal_success') }}</div>
@@ -63,7 +59,7 @@
 
                 <form wire:submit.prevent="update">
                     <div>
-                        <label for="modal_name">Имя:</label>
+                        <label for="modal_name">Название:</label>
                         <input type="text" id="modal_name" wire:model="name" required>
                         @error('name') <span class="error-message">{{ $message }}</span> @enderror
                     </div>
@@ -74,27 +70,10 @@
                         @error('email') <span class="error-message">{{ $message }}</span> @enderror
                     </div>
                     
-                    <div class="roles-selection">
-                        <label>Роли пользователя:</label>
-                        <div class="roles-container">
-                            @foreach($allRoles as $role)
-                                <div class="role-option">
-                                    <input 
-                                        type="checkbox" 
-                                        id="role-{{ $role->name }}" 
-                                        wire:model="selectedRoles" 
-                                        value="{{ $role->name }}"
-                                        class="role-checkbox"
-                                    >
-                                    <label for="role-{{ $role->name }}" class="role-label">
-                                        {{ ucfirst($role->name) }}
-                                    </label>
-                                </div>
-                            @endforeach
-                        </div>
-                        @error('selectedRoles') 
-                            <div class="error-message">{{ $message }}</div> 
-                        @enderror
+                    <div>
+                        <label for="modal_phone">Телефон:</label>
+                        <input type="tel" id="modal_phone" wire:model="phone">
+                        @error('phone') <span class="error-message">{{ $message }}</span> @enderror
                     </div>
                     
                     <div class="modal-actions">
@@ -123,10 +102,9 @@
                         }
                     });
                 </script>
-
             </div>
         </div>
     @endif
 
-    @include('customPages.usersTablePage.users-table-page-styles')
+    @include('customPages.partnersTablePage.partners-table-page-styles')
 </div>

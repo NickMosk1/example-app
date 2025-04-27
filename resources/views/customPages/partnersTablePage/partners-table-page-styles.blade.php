@@ -1,5 +1,5 @@
 <style>
-    .users-amount {
+    .partners-amount {
         color: {{$colors['GREEN']}};
         font-family: 'Montserrat', sans-serif;
         font-size: 1.2em;
@@ -8,7 +8,7 @@
         transition: all 0.3s ease;
     }
 
-    .user-table {
+    .partner-table {
         width: 100%;
         min-width: 900px;
         border-collapse: collapse;
@@ -19,107 +19,37 @@
         font-family: 'Montserrat', sans-serif;
     }
 
-    .user-table thead {
+    .partner-table thead {
         background-color: {{$colors['GREEN']}};
         color: {{$colors['WHITE']}};
         font-weight: bold;
     }
 
-    .user-table th, .user-table td {
+    .partner-table th, .partner-table td {
         padding: 12px;
         text-align: center;
         vertical-align: middle;
     }
 
-    .user-table tbody tr {
+    .partner-table tbody tr {
         color: {{$colors['DARK_GRAY']}};
         background-color: {{$colors['WHITE']}};
         transition: all 0.3s ease;
     }
 
-    .user-table tbody tr:hover {
+    .partner-table tbody tr:hover {
         color: {{$colors['WHITE']}};
         background-color: {{$colors['GREEN_HOVER']}};
     }
 
-    .user-table tbody tr:nth-child(even) {
+    .partner-table tbody tr:nth-child(even) {
         background-color: {{$colors['LIGHT_GREEN']}};
     }
 
-    .user-table tbody tr:nth-child(even):hover {
+    .partner-table tbody tr:nth-child(even):hover {
         background-color: {{$colors['GREEN_HOVER']}};
     }
 
-    .roles-cell {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 5px;
-        justify-content: center;
-    }
-
-    .role-chip {
-        display: inline-block;
-        padding: 5px 12px;
-        border-radius: 20px;
-        font-size: 0.8em;
-        font-weight: bold;
-        color: {{$colors['WHITE']}};
-        transition: all 0.3s ease;
-    }
-
-    .role-manager { background-color: {{$colors['PURPLE']}}; }
-    .role-applicant { background-color: {{$colors['BLUE']}}; }
-    .role-partner { background-color: {{$colors['ORANGE']}}; }
-
-    .roles-selection {
-        margin-bottom: 20px;
-        text-align: left;
-    }
-    
-    .roles-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-top: 10px;
-    }
-    
-    .role-option {
-        position: relative;
-    }
-    
-    .role-checkbox {
-        position: absolute;
-        opacity: 0;
-    }
-    
-    .role-label {
-        display: inline-block;
-        padding: 8px 15px;
-        background-color: {{$colors['WHITE']}};
-        color: {{$colors['DARK_GRAY']}};
-        border: 1px solid {{$colors['LIGHT_GRAY']}};
-        border-radius: 20px;
-        font-family: 'Montserrat', sans-serif;
-        font-size: 0.9em;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-    
-    .role-checkbox:checked + .role-label {
-        background-color: {{$colors['GREEN']}};
-        color: {{$colors['WHITE']}};
-        border-color: {{$colors['GREEN']}};
-    }
-    
-    .role-checkbox:focus + .role-label {
-        box-shadow: 0 0 0 2px {{$colors['GREEN']}};
-    }
-    
-    .role-label:hover {
-        background-color: {{$colors['LIGHT_GRAY']}};
-    }
-
-    /* Остальные стили */
     .pagination {
         display: flex;
         gap: 5px;
@@ -198,7 +128,6 @@
         height: 25px;
     }
 
-    /* Модальное окно */
     .modal-overlay {
         position: fixed;
         top: 0;
@@ -336,7 +265,7 @@
         font-family: 'Montserrat', sans-serif;
         margin-bottom: 15px;
         padding: 10px;
-        background-color: #ffebee;
+        background-color: {{ $colors['WHITE'] }};
         border-radius: 5px;
         text-align: center;
     }

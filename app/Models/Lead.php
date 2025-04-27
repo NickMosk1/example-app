@@ -11,7 +11,6 @@ class Lead extends Model
     use HasFactory;
 
     protected $fillable = [
-        'full_name',
         'quantity',
         'type',
         'status',
@@ -46,7 +45,6 @@ class Lead extends Model
             if ($lead->lead_source_id) {
                 $source = LeadSource::find($lead->lead_source_id);
                 
-                // Если источник не нативный, устанавливаем случайные цены
                 if (!$source->is_native) {
                     $lead->purchase_price = mt_rand(
                         $source->min_purchase_price * 100,
@@ -59,7 +57,6 @@ class Lead extends Model
                     ) / 100;
                 }
                 
-                // Увеличиваем счетчик заявок у источника
                 $source->increment('total_leads');
             }
         });

@@ -12,7 +12,6 @@ class LeadsImport implements ToModel, WithHeadingRow, WithValidation
     public function model(array $row)
     {
         return new Lead([
-            'full_name'     => $row['full_name'] ?? $row['имя'] ?? $row['фио'] ?? null,
             'quantity'      => $row['quantity'] ?? $row['количество'] ?? 1,
             'type'          => $row['type'] ?? $row['тип'] ?? $row['продукт'] ?? 'Не указан',
             'status'        => $row['status'] ?? $row['статус'] ?? 'pending',
@@ -23,7 +22,6 @@ class LeadsImport implements ToModel, WithHeadingRow, WithValidation
     public function rules(): array
     {
         return [
-            'full_name' => 'required',
             'quantity' => 'required|numeric',
             'type' => 'required',
             'lead_source_id' => 'required|numeric',
@@ -33,7 +31,6 @@ class LeadsImport implements ToModel, WithHeadingRow, WithValidation
     public function customValidationMessages()
     {
         return [
-            'full_name.required' => 'Поле ФИО обязательно для заполнения',
             'quantity.required' => 'Поле Количество обязательно для заполнения',
             'quantity.numeric' => 'Количество должно быть числом',
             'type.required' => 'Поле Тип обязательно для заполнения',

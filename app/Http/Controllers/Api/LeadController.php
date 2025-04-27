@@ -15,7 +15,6 @@ class LeadController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'leads' => 'required|array',
-            'leads.*.full_name' => 'required|string|max:255',
             'leads.*.quantity' => 'required|integer|min:1',
             'leads.*.type' => 'required|string|max:255',
             'leads.*.status' => 'required|string|in:pending,completed,canceled',
@@ -51,7 +50,6 @@ class LeadController extends Controller
 
             // Создаем заявку
             $lead = Lead::create([
-                'full_name' => $leadData['full_name'],
                 'quantity' => $leadData['quantity'],
                 'type' => $leadData['type'],
                 'status' => $leadData['status'],
