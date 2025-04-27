@@ -9,15 +9,20 @@
         transition: all 0.3s ease;
     }
 
-    .lead-table {
+    .table-container {
         width: 100%;
-        min-width: 900px;
-        border-collapse: collapse;
-        margin-top: 20px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
         box-shadow: 0 4px 4px {{$colors['LIGHT_GRAY']}};
         border-radius: 8px;
-        overflow: hidden;
+        margin-top: 20px;
         font-family: 'Montserrat', sans-serif;
+    }
+
+    .lead-table {
+        width: 100%;
+        min-width: 1000px;
+        border-collapse: collapse;
     }
 
     .lead-table thead {
@@ -434,5 +439,32 @@
         font-size: 24px;
         color: {{$colors['DARK_GRAY']}};
         cursor: pointer;
+    }
+
+    .source-cell {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .source-name {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 150px;
+    }
+
+    .native-badge {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: {{$colors['GREEN']}};
+        margin-left: 5px;
+    }
+
+    .no-source {
+        color: #999;
+        font-style: italic;
     }
 </style>

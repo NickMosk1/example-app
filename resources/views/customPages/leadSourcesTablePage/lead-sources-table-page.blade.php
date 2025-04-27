@@ -28,18 +28,10 @@
                     </td>
                     <td>{{ $source->total_leads }}</td>
                     <td>
-                        @if(!$source->is_native)
-                            {{ number_format($source->min_purchase_price, 2) }} - {{ number_format($source->max_purchase_price, 2) }} ₽
-                        @else
-                            <span class="no-price">—</span>
-                        @endif
+                        {{ number_format($source->min_purchase_price, 2) }} - {{ number_format($source->max_purchase_price, 2) }} ₽
                     </td>
                     <td>
-                        @if(!$source->is_native)
-                            {{ number_format($source->min_sale_price, 2) }} - {{ number_format($source->max_sale_price, 2) }} ₽
-                        @else
-                            <span class="no-price">—</span>
-                        @endif
+                        {{ number_format($source->min_sale_price, 2) }} - {{ number_format($source->max_sale_price, 2) }} ₽
                     </td>
                     <td>
                         <div class="contacts-info">

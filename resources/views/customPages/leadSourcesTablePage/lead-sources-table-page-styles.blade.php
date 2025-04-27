@@ -9,10 +9,6 @@
         transition: all 0.3s ease;
     }
 
-    .sources-amount span {
-        font-weight: bold;
-    }
-
     .sources-table {
         width: 100%;
         min-width: 900px;

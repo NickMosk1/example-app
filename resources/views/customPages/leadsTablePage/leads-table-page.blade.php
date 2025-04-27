@@ -5,7 +5,7 @@
                 <span>Импорт из Excel</span>
             </button>
             
-            <button wire:click="export" class="admin-button" style="background-color: {{$colors['BLUE']}}">
+            <button wire:click="export" class="admin-button">
                 <span>Экспорт в Excel</span>
             </button>
         </div>
@@ -67,87 +67,99 @@
     </div>
     @endif
 
-    <table class="lead-table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Количество</th>
-                <th>Описание</th>
-                <th>Источник</th>
-                <th>Цена покупки</th>
-                <th>Цена продажи</th>
-                <th>Статус</th>
-                <th>Создана</th>
-                <th>Обновлена</th>
-                <th>Действия</th>
-            </tr>
-        </thead>
-        <tbody wire:poll.1000ms>
-            @foreach($leads as $lead)
+    <div class="table-container">
+        <table class="lead-table">
+            <thead>
                 <tr>
-                    <td>{{ $lead->id }}</td>
-                    <td>{{ $lead->quantity }}</td>
-                    <td>{{ $lead->type }}</td>
-                    <td>
-                        @if($lead->leadSource)
-                            {{ $lead->leadSource->name }}
-                            @if($lead->leadSource->is_native)
-                                <span class="native-badge"></span>
-                            @endif
-                        @else
-                            <span class="no-source">Не указан</span>
-                        @endif
-                    </td>
-                    <td class="price-cell">
-                        @if($lead->purchase_price)
-                            {{ number_format($lead->purchase_price, 2) }} ₽
-                        @else
-                            <span class="no-price">—</span>
-                        @endif
-                    </td>
-                    <td class="price-cell">
-                        @if($lead->sale_price)
-                            {{ number_format($lead->sale_price, 2) }} ₽
-                        @else
-                            <span class="no-price">—</span>
-                        @endif
-                    </td>
-                    <td class="status-cell">
-                        <span class="status-badge status-{{ str_replace(' ', '_', strtolower($lead->status)) }}">
-                            @switch($lead->status)
-                                @case('pending')
-                                    В ожидании
-                                @break
-                                @case('in_progress')
-                                    В работе
-                                @break
-                                @case('sold_to_partner')
-                                    Продана партнеру
-                                @break
-                                @case('cancelled')
-                                    Отменена
-                                @break
-                                @default
-                                    Неизвестный статус
-                            @endswitch
-                        </span>
-                    </td>
-                    <td>{{ $lead->created_at }}</td>
-                    <td>{{ $lead->updated_at }}</td>
-                    <td class="actions-cell">
-                        <div class="record-button-container">
-                            <button class="btn-edit" wire:click="edit({{ $lead->id }})">
-                                <img class="edit-image" src="{{ asset('additional/edit3.JPG') }}" alt="Редактирование">
-                            </button>
-                            <button class="btn-delete" wire:click="confirmDelete({{ $lead->id }})">
-                                <img class="delete-image" src="{{ asset('additional/delete2.JPG') }}" alt="Удаление">
-                            </button> 
-                        </div>
-                    </td>
+                    <th>ID</th>
+                    <th>Количество</th>
+                    <th>Описание</th>
+                    <th>Источник</th>
+                    <th>Передана партнеру</th>
+                    <th>Цена покупки</th>
+                    <th>Цена продажи</th>
+                    <th>Статус</th>
+                    <th>Создана</th>
+                    <th>Обновлена</th>
+                    <th>Действия</th>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+            </thead>
+            <tbody wire:poll.1000ms>
+                @foreach($leads as $lead)
+                    <tr>
+                        <td>{{ $lead->id }}</td>
+                        <td>{{ $lead->quantity }}</td>
+                        <td>{{ $lead->type }}</td>
+                        <td>
+                            @if($lead->leadSource)
+                                <div class="source-cell">
+                                    <span class="source-name">{{ $lead->leadSource->name }}</span>
+                                    @if($lead->leadSource->is_native)
+                                        <span class="native-badge" title="Внутренний источник"></span>
+                                    @endif
+                                </div>
+                            @else
+                                <span class="no-source">Не указан</span>
+                            @endif
+                        </td>
+                        <td>
+                            @if($lead->partner)
+                                <span class="partner-name">{{ $lead->partner->name }}</span>
+                            @else
+                                <span class="no-partner">Не указан</span>
+                            @endif
+                        </td>
+                        <td class="price-cell">
+                            @if($lead->purchase_price)
+                                {{ number_format($lead->purchase_price, 2) }} ₽
+                            @else
+                                <span class="no-price">—</span>
+                            @endif
+                        </td>
+                        <td class="price-cell">
+                            @if($lead->sale_price)
+                                {{ number_format($lead->sale_price, 2) }} ₽
+                            @else
+                                <span class="no-price">—</span>
+                            @endif
+                        </td>
+                        <td class="status-cell">
+                            <span class="status-badge status-{{ str_replace(' ', '_', strtolower($lead->status)) }}">
+                                @switch($lead->status)
+                                    @case('pending')
+                                        В ожидании
+                                    @break
+                                    @case('in_progress')
+                                        В работе
+                                    @break
+                                    @case('sold_to_partner')
+                                        Продана партнеру
+                                    @break
+                                    @case('cancelled')
+                                        Отменена
+                                    @break
+                                    @default
+                                        Неизвестный статус
+                                @endswitch
+                            </span>
+                        </td>
+                        <td>{{ $lead->created_at->format('d.m.Y H:i') }}</td>
+                        <td>{{ $lead->updated_at->format('d.m.Y H:i') }}</td>
+                        <td class="actions-cell">
+                            <div class="record-button-container">
+                                <button class="btn-edit" wire:click="edit({{ $lead->id }})">
+                                    <img class="edit-image" src="{{ asset('additional/edit3.JPG') }}" alt="Редактирование">
+                                </button>
+                                <button class="btn-delete" wire:click="confirmDelete({{ $lead->id }})">
+                                    <img class="delete-image" src="{{ asset('additional/delete2.JPG') }}" alt="Удаление">
+                                </button> 
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 
     {{ $leads->links() }}
 
