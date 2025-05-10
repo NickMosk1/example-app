@@ -25,7 +25,15 @@ Route::get('/partners/create', \App\Livewire\CreatePartner::class)->name('partne
 
 Route::get('/leads/table', \App\Livewire\LeadsTable::class)->name('leads.table')->middleware('auth');
 
+Route::get('/leads/table/byPartner', \App\Livewire\LeadsTableByPartnerId::class)->name('leads.table.by.partner')->middleware('auth');
+
+// Route::get('/leads/table/bySource', \App\Livewire\LeadsTableBySourceId::class)->name('leads.table.by.source')->middleware('auth');
+
 Route::get('/leads/create', \App\Livewire\CreateLead::class)->name('leads.create')->middleware('auth');
+
+Route::get('/leads/sources/table', \App\Livewire\LeadSourcesTable::class)->name('leads.sources.table')->middleware('auth');
+
+Route::get('/leads/sources/create', \App\Livewire\LeadSourcesTable::class)->name('leads.sources.create')->middleware('auth');
 
 
 
@@ -36,8 +44,3 @@ Route::get('/adminPanel', \App\Livewire\AdminPanel::class)->name('admin.panel')-
 Route::get('/account', \App\Livewire\Account::class)->name('account')->middleware('auth');
 
 Route::put('/account/update', \App\Livewire\Account::class)->name('account.update')->middleware('auth');
-
-
-Route::get('/leads/sources/table', \App\Livewire\LeadSourcesTable::class)->name('leads.sources.table')->middleware('auth');
-
-Route::get('/leads/sources/create', \App\Livewire\LeadSourcesTable::class)->name('leads.sources.create')->middleware('auth');

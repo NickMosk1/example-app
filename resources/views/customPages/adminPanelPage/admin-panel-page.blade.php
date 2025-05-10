@@ -10,7 +10,8 @@
             $user = auth()->user();
             $showUsersTable = $user->hasRole('manager');
             $showCreateUser = $user->hasRole('manager');
-            $showLeadsTable = $user->hasRole('manager') || $user->hasRole('partner') || $user->hasRole('applicant');
+            $showLeadsTable = $user->hasRole('manager');
+            $showPartnersLeadsTable = $user->hasRole('partner');
             $showCreateLead = $user->hasRole('manager') || $user->hasRole('applicant');
             $showLeadSourcesTable = $user->hasRole('manager');
             $showCreateLeadSource = $user->hasRole('manager');
@@ -92,6 +93,21 @@
                 @if($showCreatePartner)
                     <button class="admin-button" onclick="location.href='/partners/create'">
                         Создать партнера
+                    </button>
+                @endif
+            </div>
+        </div>
+        @endif
+
+        @if($showPartnersLeadsTable)
+        <div class="admin-panel partner-panel">
+            
+            <h3 class="admin-panel-title">Мои заявки</h3>
+            
+            <div class="button-group">
+                @if($showPartnersLeadsTable)
+                    <button class="admin-button" onclick="location.href='/leads/table/byPartner'">
+                        Таблица заявок
                     </button>
                 @endif
             </div>

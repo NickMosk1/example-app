@@ -39,8 +39,8 @@
                         <input 
                             type="checkbox" 
                             id="role-{{ $role->id }}" 
-                            wire:model="selectedRoles" 
-                            value="{{ $role->name }}"
+                            wire:click="toggleRole('{{ $role->name }}')"
+                            {{ in_array($role->name, $selectedRoles) ? 'checked' : '' }}
                             class="role-checkbox"
                         >
                         <label for="role-{{ $role->id }}" class="role-label">
@@ -53,6 +53,25 @@
                 <div class="error-message">{{ $message }}</div>
             @enderror
         </div>
+
+        @if($showPartnerSelect)
+            <div class="partner-selection">
+                <label for="partner">Привязать к партнеру:</label>
+                <select 
+                    id="partner" 
+                    wire:model="selectedPartner" 
+                    class="partner-select"
+                >
+                    <option value="">-- Выберите партнера --</option>
+                    @foreach($partners as $partner)
+                        <option value="{{ $partner->id }}">{{ $partner->name }}</option>
+                    @endforeach
+                </select>
+                @error('selectedPartner')
+                    <div class="error-message">{{ $message }}</div>
+                @enderror
+            </div>
+        @endif
 
         <button class="create-user-button" type="submit">Создать пользователя</button>
         <button type="button" class="home-button" onclick="window.location.href='/'">На главную</button>

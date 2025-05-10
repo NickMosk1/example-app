@@ -9,9 +9,38 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 
 class LeadsExport implements FromCollection, WithHeadings, WithMapping
 {
+    protected $filters = [];
+
+    public function __construct(array $filters = [])
+    {
+        $this->filters = $filters;
+    }
+
     public function collection()
     {
-        return Lead::with(['leadSource', 'partner'])->get();
+        $query = Lead::with(['leadSource', 'partner']);
+
+        if (isset($this->filters['partner_id'])) {
+            $query->where('partner_id', $this->filters['partner_id']);
+        }
+
+        if (isset($this->filters['lead_source_id'])) {
+            $query->where('lead_source_id', $this->filters['lead_source_id']);
+        }
+
+        if (isset($this->filters['status'])) {
+            $query->where('status', $this->filters['status']);
+        }
+
+        if (isset($this->filters['date_from'])) {
+            $query->where('created_at', '>=', $this->filters['date_from']);
+        }
+
+        if (isset($this->filters['date_to'])) {
+            $query->where('created_at', '<=', $this->filters['date_to']);
+        }
+
+        return $query->get();
     }
 
     public function headings(): array
@@ -39,10 +68,10 @@ class LeadsExport implements FromCollection, WithHeadings, WithMapping
             $this->getStatusText($lead->status),
             $lead->leadSource ? $lead->leadSource->name : 'Не указан',
             $lead->partner ? $lead->partner->name : 'Не указан',
-            $lead->purchase_price,
-            $lead->sale_price,
-            $lead->created_at,
-            $lead->updated_at,
+            $lead->purchase_price ? number_format($lead->purchase_price, 2) . ' ₽' : '-',
+            $lead->sale_price ? number_format($lead->sale_price, 2) . ' ₽' : '-',
+            $lead->created_at->format('d.m.Y H:i'),
+            $lead->updated_at->format('d.m.Y H:i'),
         ];
     }
 
