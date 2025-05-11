@@ -430,17 +430,6 @@
         margin-bottom: 20px;
     }
 
-    .modal-close {
-        position: absolute;
-        top: 0;
-        right: 0;
-        background: none;
-        border: none;
-        font-size: 24px;
-        color: {{$colors['DARK_GRAY']}};
-        cursor: pointer;
-    }
-
     .source-cell {
         display: flex;
         align-items: center;

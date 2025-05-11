@@ -311,6 +311,21 @@
         display: block;
     }
 
+    .btn-reject {
+        color: {{$colors['DEFAULT_GRAY']}};
+        display: flex;
+        margin-right: 10px;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+    .btn-reject:hover {
+        transform: scale(1.1);
+        color: {{$colors['RED']}};
+        transition: all 0.3s ease;
+    }
+
     @keyframes modalEnter {
         from { transform: translateY(-20px); opacity: 0; }
         to { transform: translateY(0); opacity: 1; }
@@ -394,7 +409,6 @@
         background-color: {{ $colors['GREEN_HOVER'] }};
     }
 
-    /* Лоадер */
     .loading-spinner {
         display: inline-flex;
         align-items: center;
@@ -427,17 +441,6 @@
         position: relative;
         padding-bottom: 20px;
         margin-bottom: 20px;
-    }
-
-    .modal-close {
-        position: absolute;
-        top: 0;
-        right: 0;
-        background: none;
-        border: none;
-        font-size: 24px;
-        color: {{ $colors['DARK_GRAY'] }};
-        cursor: pointer;
     }
 
     .source-cell {

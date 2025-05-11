@@ -19,7 +19,6 @@
                     <img class="modal-image admin-modal-image" src="{{ asset('additional/adminPanel.JPG') }}" alt="Импорт">
                 </div>
                 <h3 class="modal-title">Импорт заявок</h3>
-                <button class="modal-close" wire:click="$set('showImportModal', false)">&times;</button>
             </div>
             
             <form wire:submit.prevent="import">

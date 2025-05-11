@@ -90,12 +90,12 @@
         align-items: center;
         justify-content: center;
         flex-direction: row;
-        width: 100px;
     }
 
     .btn-edit {
-        margin-right: 10px;
+        color: {{$colors['DEFAULT_GRAY']}};
         display: flex;
+        margin-right: 10px;
         align-items: center;
         justify-content: center;
         transition: all 0.3s ease;
@@ -103,11 +103,29 @@
 
     .btn-edit:hover {
         transform: scale(1.1);
+        color: {{$colors['WHITE']}};
+        transition: all 0.3s ease;
+    }
+
+    .btn-stats {
+        color: {{$colors['DEFAULT_GRAY']}};
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-stats:hover {
+        transform: scale(1.08);
+        color: {{$colors['WHITE']}};
         transition: all 0.3s ease;
     }
 
     .btn-delete {
+        margin-right: 10px;
         display: flex;
+        color: {{$colors['DEFAULT_GRAY']}};
         align-items: center;
         justify-content: center;
         transition: all 0.3s ease;
@@ -115,6 +133,7 @@
 
     .btn-delete:hover {
         transform: scale(1.1);
+        color: {{$colors['WHITE']}};
         transition: all 0.3s ease;
     }
 
@@ -197,6 +216,13 @@
         font-size: 1em;
         transition: all 0.3s ease;
         font-family: 'Montserrat', sans-serif;
+    }
+
+    .modal-content input:focus,
+    .modal-content textarea:focus {
+        border-color: {{ $colors['GREEN'] }};
+        outline: none;
+        box-shadow: 0 4px 4px {{ $colors['GREEN'] }};
     }
 
     .modal-actions {

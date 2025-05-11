@@ -48,9 +48,17 @@
                         </div>
                     </td>
                     <td class="actions-cell">
-                        <button class="btn-stats" wire:click="showSourceStats({{ $source->id }})">
-                            <i class="fas fa-chart-pie"></i> Статистика
-                        </button>
+                        <div class="record-button-container">
+                            <button class="btn-edit" wire:click="edit({{ $source->id }})">
+                                <i class="fas fa-pencil"></i>
+                            </button>
+                            <button class="btn-delete" wire:click="confirmDelete({{ $source->id }})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <button class="btn-stats" wire:click="showSourceStats({{ $source->id }})">
+                                <i class="fas fa-chart-pie"></i> Статистика
+                            </button>
+                        </div>
                     </td>
                 </tr>
             @endforeach
@@ -97,7 +105,6 @@
                         </div>
                     </div>
                     
-                    <!-- Финансовая статистика -->
                     <div class="stats-card">
                         <h4>Финансовые показатели</h4>
                         <div class="stats-row">
@@ -131,30 +138,7 @@
                             </span>
                         </div>
                     </div>
-                    
-                    <!-- График статусов -->
-                    <div class="stats-card">
-                        <h4>Статусы заявок</h4>
-                        <div x-data="chartComponent('status')" x-init="initChart()" class="chart-container">
-                            <div x-ref="chart"></div>
-                            <template x-if="loading">
-                                <div class="chart-loading">Загрузка данных...</div>
-                            </template>
-                        </div>
-                    </div>
 
-                    <!-- График финансовых показателей -->
-                    <div class="stats-card">
-                        <h4>Финансовые показатели</h4>
-                        <div x-data="chartComponent('finance')" x-init="initChart()" class="chart-container">
-                            <div x-ref="chart"></div>
-                            <template x-if="loading">
-                                <div class="chart-loading">Загрузка данных...</div>
-                            </template>
-                        </div>
-                    </div>
-                    
-                    <!-- Топ заявок -->
                     <div class="stats-card">
                         <h4>Самые выгодные заявки</h4>
                         <div class="leads-list">
@@ -172,7 +156,6 @@
                         </div>
                     </div>
                     
-                    <!-- Последние заявки -->
                     <div class="stats-card">
                         <h4>Последние заявки</h4>
                         <div class="leads-list scrollable">
@@ -200,158 +183,82 @@
         </div>
     @endif
 
-    @include('customPages.leadSourcesTablePage.lead-sources-table-page-styles')
+    @if($showEditModal)
+        <div class="modal-overlay">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Редактирование источника #{{ $editingSourceId }}</h3>
+                </div>
 
-    @push('scripts')
+                @if (session()->has('message'))
+                    <div class="alert alert-success">
+                        {{ session('message') }}
+                    </div>
+                @endif
+                @if (session()->has('error'))
+                    <div class="alert alert-error">
+                        {{ session('error') }}
+                    </div>
+                @endif
 
-    @if(!app()->environment('testing'))
-        <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+                <form wire:submit.prevent="update">
+                    <div class="form-group">
+                        <label for="name">Название</label>
+                        <input type="text" id="name" wire:model="form.name" class="form-input">
+                        @error('form.name') <span class="error-message">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" wire:model="form.is_native">
+                            Нативный источник
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" wire:model="form.email" class="form-input">
+                        @error('form.email') <span class="error-message">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Телефон</label>
+                        <input type="text" id="phone" wire:model="form.phone" class="form-input">
+                        @error('form.phone') <span class="error-message">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="min_purchase_price">Минимальная цена покупки</label>
+                        <input type="number" id="min_purchase_price" wire:model="form.min_purchase_price" class="form-input" min="0" step="0.01">
+                        @error('form.min_purchase_price') <span class="error-message">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="max_purchase_price">Максимальная цена покупки</label>
+                        <input type="number" id="max_purchase_price" wire:model="form.max_purchase_price" class="form-input" min="0" step="0.01">
+                        @error('form.max_purchase_price') <span class="error-message">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="min_sale_price">Минимальная цена продажи</label>
+                        <input type="number" id="min_sale_price" wire:model="form.min_sale_price" class="form-input" min="0" step="0.01">
+                        @error('form.min_sale_price') <span class="error-message">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div class="form-group">
+                        <label for="max_sale_price">Максимальная цена продажи</label>
+                        <input type="number" id="max_sale_price" wire:model="form.max_sale_price" class="form-input" min="0" step="0.01">
+                        @error('form.max_sale_price') <span class="error-message">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="submit" class="btn-save">Сохранить</button>
+                        <button type="button" class="btn-cancel" wire:click="closeEditModal">Отмена</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     @endif
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    
-    <script>
-    document.addEventListener('alpine:init', () => {
-        Alpine.data('chartComponent', (type) => ({
-            chart: null,
-            loading: true,
-            chartType: type,
-            
-            initChart() {
-                this.initEmptyChart();
-                
-                // Следим за изменениями данных от Livewire
-                this.$watch('data', (newData) => {
-                    if (newData) {
-                        this.updateChart(newData);
-                    }
-                });
 
-                // Альтернативный вариант для Livewire
-                Livewire.on('updateCharts', (data) => {
-                    this.updateChart(data);
-                });
-            },
-            
-            initEmptyChart() {
-                const emptyConfig = this.getChartConfig({
-                    chartData: {
-                        statusLabels: ['Нет данных'],
-                        statusValues: [1],
-                        financeLabels: ['Нет данных'],
-                        financeValues: [0]
-                    }
-                });
-                
-                this.chart = new ApexCharts(this.$refs.chart, emptyConfig);
-                this.chart.render();
-                this.loading = false;
-            },
-            
-            updateChart(data) {
-                try {
-                    this.loading = true;
-                    const config = this.getChartConfig(data);
-                    
-                    if (this.chart) {
-                        this.chart.updateOptions(config);
-                    } else {
-                        this.chart = new ApexCharts(this.$refs.chart, config);
-                        this.chart.render();
-                    }
-                } catch (e) {
-                    console.error(`Ошибка обновления графика ${this.chartType}:`, e);
-                    this.showError();
-                } finally {
-                    this.loading = false;
-                }
-            },
-            
-            getChartConfig(data) {
-                const colors = {
-                    ORANGE: '#FF9800',
-                    BLUE: '#2196F3',
-                    GREEN: '#4CAF50',
-                    RED: '#F44336'
-                };
-                
-                const commonOptions = {
-                    chart: {
-                        height: 300,
-                        animations: {
-                            enabled: true,
-                            easing: 'easeinout'
-                        }
-                    },
-                    responsive: [{
-                        breakpoint: 480,
-                        options: {
-                            chart: {
-                                height: 250
-                            },
-                            legend: {
-                                position: 'bottom'
-                            }
-                        }
-                    }]
-                };
-                
-                if (this.chartType === 'status') {
-                    return {
-                        ...commonOptions,
-                        chart: { type: 'donut' },
-                        series: data.chartData.statusValues || [0],
-                        labels: data.chartData.statusLabels || ['Нет данных'],
-                        colors: [colors.ORANGE, colors.BLUE, colors.GREEN, colors.RED],
-                        plotOptions: {
-                            pie: {
-                                donut: {
-                                    labels: {
-                                        show: true,
-                                        total: {
-                                            show: true,
-                                            label: 'Всего',
-                                            color: '#333'
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    };
-                } else { // finance
-                    return {
-                        ...commonOptions,
-                        chart: { type: 'bar' },
-                        series: [{
-                            name: 'Сумма (₽)',
-                            data: data.chartData.financeValues || [0]
-                        }],
-                        colors: [colors.GREEN],
-                        xaxis: {
-                            categories: data.chartData.financeLabels || ['Нет данных']
-                        },
-                        yaxis: {
-                            labels: {
-                                formatter: function(val) {
-                                    return val.toLocaleString('ru-RU') + ' ₽';
-                                }
-                            }
-                        },
-                        tooltip: {
-                            y: {
-                                formatter: function(val) {
-                                    return val.toLocaleString('ru-RU') + ' ₽';
-                                }
-                            }
-                        }
-                    };
-                }
-            },
-            
-            showError() {
-                this.$refs.chart.innerHTML = '<div class="chart-error">Ошибка загрузки графика</div>';
-            }
-        }));
-    });
-    </script>
-    @endpush
+    @include('customPages.leadSourcesTablePage.lead-sources-table-page-styles')
 </div>

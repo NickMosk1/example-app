@@ -92,26 +92,58 @@
         text-align: center;
     }
 
-    .btn-stats {
-        padding: 8px 15px;
-        background-color: {{$colors['GREEN']}};
-        color: {{$colors['WHITE']}};
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
+    .record-button-container {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+    }
+
+    .btn-edit {
+        color: {{$colors['DEFAULT_GRAY']}};
+        display: flex;
+        margin-right: 10px;
+        align-items: center;
+        justify-content: center;
         transition: all 0.3s ease;
-        font-family: 'Montserrat', sans-serif;
+    }
+
+    .btn-edit:hover {
+        transform: scale(1.1);
+        color: {{$colors['WHITE']}};
+        transition: all 0.3s ease;
+    }
+
+    .btn-stats {
+        color: {{$colors['DEFAULT_GRAY']}};
         display: flex;
         align-items: center;
-        gap: 5px;
+        justify-content: center;
+        margin-right: 10px;
+        transition: all 0.3s ease;
     }
 
     .btn-stats:hover {
-        background-color: {{$colors['GREEN_HOVER']}};
-        transform: translateY(-2px);
+        transform: scale(1.08);
+        color: {{$colors['WHITE']}};
+        transition: all 0.3s ease;
     }
 
-    /* Модальное окно статистики */
+    .btn-delete {
+        margin-right: 10px;
+        display: flex;
+        color: {{$colors['DEFAULT_GRAY']}};
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }    
+
+    .btn-delete:hover {
+        transform: scale(1.1);
+        color: {{$colors['WHITE']}};
+        transition: all 0.3s ease;
+    }
+
     .modal-overlay {
         position: fixed;
         top: 0;
@@ -296,7 +328,6 @@
         to { transform: translateY(0); opacity: 1; }
     }
 
-    /* Пагинация */
     .pagination {
         display: flex;
         gap: 5px;
@@ -331,5 +362,111 @@
         .stats-grid {
             grid-template-columns: 1fr;
         }
+    }
+    
+    .modal-body {
+        padding: 10px 0;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+        text-align: left;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: {{$colors['DARK_GRAY']}};
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid {{$colors['LIGHT_GRAY']}};
+        border-radius: 5px;
+        font-size: 1em;
+        transition: all 0.3s ease;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .form-input:focus {
+        border-color: {{$colors['GREEN']}};
+        outline: none;
+        box-shadow: 0 4px 4px {{$colors['GREEN']}};
+    }
+
+    .modal-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .btn-save {
+        width: 100%;
+        padding: 10px 20px;
+        background-color: {{$colors['GREEN']}};
+        color: {{$colors['WHITE']}};
+        font-weight: bold;
+        font-family: 'Montserrat', sans-serif;
+        border: none;
+        border-radius: 5px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-save:hover {
+        background-color: {{$colors['GREEN_HOVER']}};
+    }
+
+    .btn-cancel {
+        width: 100%;
+        padding: 10px 20px;
+        background-color: {{$colors['LIGHT_GRAY']}};
+        color: {{$colors['DARK_GRAY']}};
+        font-weight: bold;
+        font-family: 'Montserrat', sans-serif;
+        border: none;
+        border-radius: 5px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-cancel:hover {
+        background-color: {{$colors['DEFAULT_GRAY']}};
+        color: {{$colors['WHITE']}};
+    }
+
+    .error-message {
+        color: {{$colors['RED']}};
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.9em;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .alert {
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        text-align: center;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .alert-success {
+        color: {{$colors['GREEN']}};
+        background-color: {{$colors['LIGHT_GREEN']}};
+    }
+
+    .alert-error {
+        color: {{$colors['RED']}};
+        background-color: {{$colors['WHITE']}};
+    }
+
+    @keyframes modalEnter {
+        from { transform: translateY(-20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
     }
 </style>

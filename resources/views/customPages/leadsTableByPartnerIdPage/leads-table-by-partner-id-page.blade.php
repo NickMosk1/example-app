@@ -74,8 +74,8 @@
                         <td>{{ $lead->updated_at->format('d.m.Y H:i') }}</td>
                         <td class="actions-cell">
                             <div class="record-button-container">
-                                <button class="btn-edit" wire:click="edit({{ $lead->id }})">
-                                    <img class="edit-image" src="{{ asset('additional/edit3.JPG') }}" alt="Редактирование">
+                                <button class="btn-reject" wire:click="rejectLead({{ $lead->id }})" title="Отказаться от заявки">
+                                    <i class="fas fa-times-circle"></i>
                                 </button>
                             </div>
                         </td>

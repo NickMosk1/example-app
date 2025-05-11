@@ -61,22 +61,6 @@ class LeadsTableByPartnerId extends Component
         ]);
     }
 
-    public function edit($leadId)
-    {
-        $lead = Lead::with(['leadSource', 'partner'])->findOrFail($leadId);
-        
-        $this->editingLeadId = $leadId;
-        $this->quantity = $lead->quantity;
-        $this->type = $lead->type;
-        $this->status = $lead->status;
-        $this->purchase_price = $lead->purchase_price;
-        $this->sale_price = $lead->sale_price;
-        $this->leadSourceId = $lead->lead_source_id;
-        $this->partnerId = $lead->partner_id;
-        
-        $this->showEditModal = true;
-    }
-
     public function update()
     {
         $this->validate([
@@ -114,32 +98,12 @@ class LeadsTableByPartnerId extends Component
         session()->flash('modal_success', 'Заявка успешно обновлена');
     }
 
-    public function confirmDelete($leadId)
+    public function rejectLead($leadId)
     {
-        $lead = Lead::find($leadId);
-
-        if ($lead) {
-            if ($lead->lead_source_id) {
-                $lead->leadSource()->decrement('total_leads');
-            }
-            
-            $lead->delete();
-            session()->flash('message', 'Заявка успешно удалена');
-        } else {
-            session()->flash('error', 'Заявка не найдена');
-        }
-    }
-    
-    public function closeModal()
-    {
-        $this->showEditModal = false;
-        $this->editingLeadId = null;
-        $this->reset([
-            'quantity', 'type', 'status', 
-            'purchase_price', 'sale_price',
-            'leadSourceId', 'partnerId'
-        ]);
-        $this->resetValidation();
+        $lead = Lead::findOrFail($leadId);
+        $lead->update(['partner_id' => null]);
+        
+        session()->flash('message', 'Вы отказались от заявки #'.$leadId);
     }
 
     public function getCountLeads()
