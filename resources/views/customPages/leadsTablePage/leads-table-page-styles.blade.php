@@ -1,5 +1,4 @@
 <style>
-    /* Существующие стили остаются без изменений */
     .leads-amount {
         color: {{$colors['GREEN']}};
         font-family: 'Montserrat', sans-serif;
@@ -453,7 +452,180 @@
     }
 
     .no-source {
-        color: #999;
+        color: {{$colors['DARK_GRAY']}};
         font-style: italic;
     }
+
+    .filters-container {
+        margin-top: 20px;
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        padding: 15px;
+        background-color: {{$colors['LIGHT_GREEN']}};
+        border-radius: 8px;
+        box-shadow: 0 4px 4px {{$colors['LIGHT_GRAY']}};
+    }
+
+    .filter-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .filter-label {
+        margin-bottom: 5px;
+        color: {{$colors['DARK_GRAY']}};
+        font-weight: 500;
+    }
+
+    .filter-select {
+        padding: 8px 12px;
+        border: 1px solid {{$colors['LIGHT_GRAY']}};
+        border-radius: 5px;
+        background-color: {{$colors['WHITE']}};
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .filter-select:hover {
+        border-color: {{$colors['GREEN']}};
+    }
+
+    .filter-select:focus {
+        outline: none;
+        border-color: {{$colors['GREEN']}};
+        box-shadow: 0 0 0 2px rgba({{$colors['GREEN']}}, 0.2);
+    }
+
+    .filter-reset {
+        align-self: flex-end;
+    }
+
+    .reset-button {
+        padding: 8px 15px;
+    }
+
+    .pagination-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .pagination-info {
+        color: {{$colors['DARK_GRAY']}};
+        font-size: 0.9em;
+    }
+
+    .pagination {
+        display: flex;
+        gap: 5px;
+    }
+
+    .pagination a, .pagination span {
+        padding: 10px 15px;
+        background-color: {{$colors['GREEN']}};
+        color: {{$colors['WHITE']}};
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+
+    .pagination a:hover {
+        background-color: {{$colors['GREEN_HOVER']}};
+    }
+
+    .pagination .active {
+        background-color: {{$colors['GREEN_HOVER']}};
+        font-weight: bold;
+    }
+
+    .pagination .disabled {
+        background-color: {{$colors['WHITE']}};
+        color: {{$colors['DARK_GRAY']}};
+        cursor: not-allowed;
+    }
+
+    .per-page-selector {
+        display: flex;
+        align-items: center;
+    }
+
+    .per-page-label {
+        margin-right: 10px;
+        color: {{$colors['DARK_GRAY']}};
+    }
+
+    .per-page-select {
+        padding: 5px 10px;
+        border: 1px solid {{$colors['LIGHT_GRAY']}};
+        border-radius: 5px;
+        background-color: {{$colors['WHITE']}};
+    }
+
+    @media (max-width: 768px) {
+        .pagination-container {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        
+        .pagination {
+            justify-content: center;
+            margin: 10px 0;
+        }
+        
+        .per-page-selector {
+            justify-content: center;
+        }
+    }
+
+    .page-link {
+        padding: 10px 15px;
+        background-color: {{$colors['GREEN']}};
+        color: {{$colors['WHITE']}};
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+        border: none;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: inherit;
+    }
+
+    .page-link:hover {
+        background-color: {{$colors['GREEN_HOVER']}};
+    }
+
+    .btn-edit {
+        color: {{$colors['DEFAULT_GRAY']}};
+        display: flex;
+        margin-right: 10px;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+    .btn-edit:hover {
+        transform: scale(1.1);
+        color: {{$colors['WHITE']}};
+        transition: all 0.3s ease;
+    }
+
+    .btn-delete {
+        margin-right: 10px;
+        display: flex;
+        color: {{$colors['DEFAULT_GRAY']}};
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }    
+
+    .btn-delete:hover {
+        transform: scale(1.1);
+        color: {{$colors['WHITE']}};
+        transition: all 0.3s ease;
+    }
+
 </style>

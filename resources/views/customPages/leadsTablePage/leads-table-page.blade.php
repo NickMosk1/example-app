@@ -4,82 +4,189 @@
             <button wire:click="$set('showImportModal', true)" class="admin-button">
                 <span>Импорт из Excel</span>
             </button>
-            
+
             <button wire:click="export" class="admin-button">
                 <span>Экспорт в Excel</span>
             </button>
         </div>
+        
+        <div class="filters-container">
+            <div class="filter-group">
+                <label class="filter-label sourceFilter">Источник:</label>
+                <select id="sourceFilter" wire:model="sourceFilter" class="filter-select">
+                    <option value="">Все источники</option>
+                    @foreach($leadSources as $source)
+                        <option value="{{ $source->id }}">{{ $source->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="filter-group">
+                <label class="filter-label partnerFilter">Партнер:</label>
+                <select id="partnerFilter" wire:model="partnerFilter" class="filter-select">
+                    <option value="">Все партнеры</option>
+                    @foreach($partners as $partner)
+                        <option value="{{ $partner->id }}">{{ $partner->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="filter-group">
+                <label class="filter-label statusFilter">Статус:</label>
+                <select id="statusFilter" wire:model="statusFilter" class="filter-select">
+                    <option value="">Все статусы</option>
+                    <option value="pending">В ожидании</option>
+                    <option value="in_progress">В работе</option>
+                    <option value="sold_to_partner">Продана партнеру</option>
+                    <option value="cancelled">Отменена</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label class="filter-label sortField">Сортировать по:</label>
+                <select id="sortField" wire:model="sortField" class="filter-select">
+                    <option value="created_at">Дате создания</option>
+                    <option value="updated_at">Дате обновления</option>
+                    <option value="quantity">Количеству</option>
+                    <option value="purchase_price">Цене покупки</option>
+                    <option value="sale_price">Цене продажи</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label class="filter-label sortDirection">Направление:</label>
+                <select id="sortDirection" wire:model="sortDirection" class="filter-select">
+                    <option value="asc">По возрастанию</option>
+                    <option value="desc">По убыванию</option>
+                </select>
+            </div>
+            <div class="filter-group filter-reset">
+                <button wire:click="resetFilters" class="admin-button reset-button">
+                    Сбросить фильтры
+                </button>
+            </div>
+        </div>
     </div>
 
     @if($showImportModal)
-    <div class="modal-overlay">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-image-container">
-                    <img class="modal-image admin-modal-image" src="{{ asset('additional/adminPanel.JPG') }}" alt="Импорт">
-                </div>
-                <h3 class="modal-title">Импорт заявок</h3>
-            </div>
-            
-            <form wire:submit.prevent="import">
-                <div class="file-upload-wrapper">
-                    <label class="file-upload-label">
-                        <input 
-                            type="file" 
-                            wire:model="importFile" 
-                            accept=".xlsx,.xls,.csv"
-                            class="file-upload-input"
-                        >
-                        <span class="file-upload-text">Выберите файл Excel</span>
-                        <span class="file-upload-button">Обзор</span>
-                    </label>
-                    @error('importFile') 
-                        <span class="error-message">{{ $message }}</span> 
-                    @enderror
+        <div class="modal-overlay">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-image-container">
+                        <img class="modal-image admin-modal-image" src="{{ asset('additional/adminPanel.JPG') }}" alt="Импорт">
+                    </div>
+                    <h3 class="modal-title">Импорт заявок</h3>
                 </div>
                 
-                <div class="modal-actions">
-                    <button 
-                        type="submit" 
-                        class="modal-save-button"
-                        wire:loading.attr="disabled"
-                        wire:target="importFile"
-                    >
-                        <span wire:loading wire:target="importFile" class="loading-spinner">
-                            <svg class="spinner-icon" viewBox="0 0 50 50">
-                                <circle class="spinner-path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
-                            </svg>
-                            Идет загрузка...
-                        </span>
-                        <span wire:loading.remove wire:target="importFile">Импортировать</span>
-                    </button>
-                    <button 
-                        type="button" 
-                        class="modal-cancel-button" 
-                        wire:click="$set('showImportModal', false)"
-                    >
-                        Отмена
-                    </button>
-                </div>
-            </form>
+                <form wire:submit.prevent="import">
+                    <div class="file-upload-wrapper">
+                        <label class="file-upload-label">
+                            <input 
+                                type="file" 
+                                wire:model="importFile" 
+                                accept=".xlsx,.xls,.csv"
+                                class="file-upload-input"
+                            >
+                            <span class="file-upload-text">Выберите файл Excel</span>
+                            <span class="file-upload-button">Обзор</span>
+                        </label>
+                        @error('importFile') 
+                            <span class="error-message">{{ $message }}</span> 
+                        @enderror
+                    </div>
+                    
+                    <div class="modal-actions">
+                        <button 
+                            type="submit" 
+                            class="modal-save-button"
+                            wire:loading.attr="disabled"
+                            wire:target="importFile"
+                        >
+                            <span wire:loading wire:target="importFile" class="loading-spinner">
+                                <svg class="spinner-icon" viewBox="0 0 50 50">
+                                    <circle class="spinner-path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+                                </svg>
+                                Идет загрузка...
+                            </span>
+                            <span wire:loading.remove wire:target="importFile">Импортировать</span>
+                        </button>
+                        <button 
+                            type="button" 
+                            class="modal-cancel-button" 
+                            wire:click="$set('showImportModal', false)"
+                        >
+                            Отмена
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
     @endif
 
     <div class="table-container">
         <table class="lead-table">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Количество</th>
+                    <th wire:click="sortBy('id')">
+                        ID
+                        @if($sortField === 'id')
+                            @if($sortDirection === 'asc')
+                                ↑
+                            @else
+                                ↓
+                            @endif
+                        @endif
+                    </th>
+                    <th wire:click="sortBy('quantity')">
+                        Количество
+                        @if($sortField === 'quantity')
+                            @if($sortDirection === 'asc')
+                                ↑
+                            @else
+                                ↓
+                            @endif
+                        @endif
+                    </th>
                     <th>Описание</th>
                     <th>Источник</th>
                     <th>Передана партнеру</th>
-                    <th>Цена покупки</th>
-                    <th>Цена продажи</th>
+                    <th wire:click="sortBy('purchase_price')">
+                        Цена покупки
+                        @if($sortField === 'purchase_price')
+                            @if($sortDirection === 'asc')
+                                ↑
+                            @else
+                                ↓
+                            @endif
+                        @endif
+                    </th>
+                    <th wire:click="sortBy('sale_price')">
+                        Цена продажи
+                        @if($sortField === 'sale_price')
+                            @if($sortDirection === 'asc')
+                                ↑
+                            @else
+                                ↓
+                            @endif
+                        @endif
+                    </th>
                     <th>Статус</th>
-                    <th>Создана</th>
-                    <th>Обновлена</th>
+                    <th wire:click="sortBy('created_at')">
+                        Создана
+                        @if($sortField === 'created_at')
+                            @if($sortDirection === 'asc')
+                                ↑
+                            @else
+                                ↓
+                            @endif
+                        @endif
+                    </th>
+                    <th wire:click="sortBy('updated_at')">
+                        Обновлена
+                        @if($sortField === 'updated_at')
+                            @if($sortDirection === 'asc')
+                                ↑
+                            @else
+                                ↓
+                            @endif
+                        @endif
+                    </th>
                     <th>Действия</th>
                 </tr>
             </thead>
@@ -147,11 +254,11 @@
                         <td class="actions-cell">
                             <div class="record-button-container">
                                 <button class="btn-edit" wire:click="edit({{ $lead->id }})">
-                                    <img class="edit-image" src="{{ asset('additional/edit3.JPG') }}" alt="Редактирование">
+                                    <i class="fas fa-pencil"></i>
                                 </button>
                                 <button class="btn-delete" wire:click="confirmDelete({{ $lead->id }})">
-                                    <img class="delete-image" src="{{ asset('additional/delete2.JPG') }}" alt="Удаление">
-                                </button> 
+                                    <i class="fas fa-trash"></i>
+                                </button>
                             </div>
                         </td>
                     </tr>
@@ -160,7 +267,44 @@
         </table>
     </div>
 
-    {{ $leads->links() }}
+    <div class="pagination-container">
+        <div class="pagination-info">
+            Показано с {{ $leads->firstItem() }} по {{ $leads->lastItem() }} из {{ $leads->total() }} записей
+        </div>
+        
+        <div class="pagination">
+            @if($leads->onFirstPage())
+                <span class="disabled">&laquo;</span>
+            @else
+                <button wire:click="previousPage" class="page-link">&laquo;</button>
+            @endif
+            
+            @foreach($leads->getUrlRange(1, $leads->lastPage()) as $page => $url)
+                @if($page == $leads->currentPage())
+                    <span class="active">{{ $page }}</span>
+                @else
+                    <button wire:click="gotoPage({{ $page }})" class="page-link">{{ $page }}</button>
+                @endif
+            @endforeach
+            
+            @if($leads->hasMorePages())
+                <button wire:click="nextPage" class="page-link">&raquo;</button>
+            @else
+                <span class="disabled">&raquo;</span>
+            @endif
+        </div>
+        
+        <div class="per-page-selector">
+            <label for="perPage" class="per-page-label">Записей на странице:</label>
+            <select id="perPage" wire:model="perPage" class="per-page-select">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+        </div>
+    </div>
 
     @if($showEditModal)
         <div class="modal-overlay">
@@ -217,7 +361,6 @@
                     <div>
                         <label for="modal_lead_source_id">Источник:</label>
                         <select id="modal_lead_source_id" wire:model="leadSourceId">
-                            <option value="">-- Не выбран --</option>
                             @foreach($leadSources as $source)
                                 <option value="{{ $source->id }}">{{ $source->name }}</option>
                             @endforeach

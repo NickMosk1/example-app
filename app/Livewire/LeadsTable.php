@@ -32,6 +32,13 @@ class LeadsTable extends Component
     public $importFile;
     public $showImportModal = false;
     
+    public $sourceFilter = '';
+    public $partnerFilter = '';
+    public $statusFilter = '';
+    public $sortField = 'created_at';
+    public $sortDirection = 'desc';
+    public $perPage = 10;
+    
     public $leadSources;
     public $partners;
 
@@ -39,6 +46,23 @@ class LeadsTable extends Component
     {
         $this->leadSources = LeadSource::all();
         $this->partners = Partner::all();
+    }
+
+    public function sortBy($field)
+    {
+        if ($this->sortField === $field) {
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortField = $field;
+            $this->sortDirection = 'asc';
+        }
+    }
+
+    public function resetFilters()
+    {
+        $this->reset(['sourceFilter', 'partnerFilter', 'statusFilter', 'sortField', 'sortDirection']);
+        $this->sortField = 'created_at';
+        $this->sortDirection = 'desc';
     }
 
     public function edit($leadId)
@@ -70,9 +94,9 @@ class LeadsTable extends Component
         ]);
 
         $lead = Lead::findOrFail($this->editingLeadId);
-        
+
         $oldPartnerId = $lead->partner_id;
-        
+
         if ($lead->lead_source_id !== $this->leadSourceId) {
             if ($lead->lead_source_id) {
                 $lead->leadSource()->decrement('total_leads');
@@ -82,15 +106,17 @@ class LeadsTable extends Component
             }
         }
 
-        $lead->update([
+        $updateData = [
             'quantity' => $this->quantity,
             'type' => $this->type,
             'status' => $this->status,
             'purchase_price' => $this->purchase_price,
             'sale_price' => $this->sale_price,
-            'lead_source_id' => $this->leadSourceId,
-            'partner_id' => $this->partnerId,
-        ]);
+            'lead_source_id' => $this->leadSourceId ?: null,
+            'partner_id' => $this->partnerId ?: null,
+        ];
+
+        $lead->update($updateData);
 
         if ($oldPartnerId != $this->partnerId && $this->partnerId) {
             try {
@@ -140,9 +166,36 @@ class LeadsTable extends Component
         $this->resetValidation();
     }
 
+    public function nextPage()
+    {
+        $this->setPage($this->page + 1);
+    }
+    
+    public function previousPage()
+    {
+        $this->setPage($this->page - 1);
+    }
+    
+    public function gotoPage($page)
+    {
+        $this->setPage($page);
+    }
+
     public function render()
     {
-        $leads = Lead::with(['leadSource', 'partner'])->paginate(20);
+        $query = Lead::with(['leadSource', 'partner'])
+            ->when($this->sourceFilter, function ($query) {
+                $query->where('lead_source_id', $this->sourceFilter);
+            })
+            ->when($this->partnerFilter, function ($query) {
+                $query->where('partner_id', $this->partnerFilter);
+            })
+            ->when($this->statusFilter, function ($query) {
+                $query->where('status', $this->statusFilter);
+            })
+            ->orderBy($this->sortField, $this->sortDirection);
+            
+        $leads = $query->paginate($this->perPage);
         
         return view('customPages.leadsTablePage.leads-table-page', [
             'leads' => $leads,

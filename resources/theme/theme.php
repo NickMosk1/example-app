@@ -10,6 +10,7 @@ return [
     'GREEN' => '#00b955',
     'GREEN_HOVER' => '#008c45',
     'RED' => '#ff4d4d',
+    'LIGHT_RED' => '#ffd6d6',
     'BLUE' => '#4d4dff',
     'YELLOW' => '#ffff00',
     'ORANGE' => '#ffb733',

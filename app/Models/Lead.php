@@ -22,6 +22,10 @@ class Lead extends Model
 
     protected $casts = [
         'quantity' => 'integer',
+        'partner_id' => 'integer',
+        'lead_source_id' => 'integer',
+        'purchase_price' => 'float',
+        'sale_price' => 'float',
     ];
 
     public static function getStatuses()
@@ -58,6 +62,12 @@ class Lead extends Model
                 }
                 
                 $source->increment('total_leads');
+            }
+        });
+
+        static::updating(function ($lead) {
+            if (is_null($lead->partner_id)) {
+                $lead->partner_id = null;
             }
         });
     }

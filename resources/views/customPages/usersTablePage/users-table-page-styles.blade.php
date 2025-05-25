@@ -336,7 +336,7 @@
         font-family: 'Montserrat', sans-serif;
         margin-bottom: 15px;
         padding: 10px;
-        background-color: #ffebee;
+        background-color: {{ $colors['WHITE'] }};
         border-radius: 5px;
         text-align: center;
     }

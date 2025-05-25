@@ -466,12 +466,12 @@
     }
 
     .no-source {
-        color: #999;
+        color: {{ $colors['DARK_GRAY'] }};
         font-style: italic;
     }
 
     .no-partner {
-        color: #999;
+        color: {{ $colors['DARK_GRAY'] }};
         font-style: italic;
     }
 
@@ -480,7 +480,7 @@
     }
 
     .no-price {
-        color: #999;
+        color: {{ $colors['DARK_GRAY'] }};
         font-style: italic;
     }
 </style>
