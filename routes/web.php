@@ -33,7 +33,7 @@ Route::get('/leads/create', \App\Livewire\CreateLead::class)->name('leads.create
 
 Route::get('/leads/sources/table', \App\Livewire\LeadSourcesTable::class)->name('leads.sources.table')->middleware('auth');
 
-Route::get('/leads/sources/create', \App\Livewire\LeadSourcesTable::class)->name('leads.sources.create')->middleware('auth');
+Route::get('/leads/sources/create', \App\Livewire\CreateLeadSource::class)->name('leads.sources.create')->middleware('auth');
 
 
 

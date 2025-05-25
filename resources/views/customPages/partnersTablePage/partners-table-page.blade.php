@@ -132,6 +132,25 @@
                             @endforeach
                         </div>
                     </div>
+                    
+                    <div class="stats-card">
+                        <h4>Представители партнера</h4>
+                        <div class="users-list scrollable">
+                            @forelse($partnerUsers as $user)
+                                <div class="user-item">
+                                    <div class="user-info">
+                                        <div class="user-name">{{ $user['name'] }}</div>
+                                        <div class="user-email">{{ $user['email'] }}</div>
+                                        <div class="user-meta">
+                                            <span class="user-role">{{ $user['roles'] ?: 'Без роли' }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="no-users">Нет связанных пользователей</div>
+                            @endforelse
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

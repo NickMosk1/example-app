@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Partner;
+use App\Models\User;
 use Livewire\WithPagination;
 use Illuminate\Support\Collection;
 
@@ -20,6 +21,8 @@ class PartnersTable extends Component
     public $email;
     public $phone;
     public $perPage = 25;
+    public $partnerUsers = [];
+    public $activeTab = 'stats';
 
     protected $listeners = ['closeStatsModal'];
 
@@ -53,15 +56,17 @@ class PartnersTable extends Component
         session()->flash('message', 'Партнер успешно обновлен');
     }
     
-    public function confirmDelete($partnerId)
+    // Упрощенный метод удаления без подтверждения
+    public function delete($partnerId)
     {
-        $partner = Partner::find($partnerId);
-
-        if ($partner) {
+        try {
+            $partner = Partner::findOrFail($partnerId);
             $partner->delete();
+            
             session()->flash('message', 'Партнер успешно удален');
-        } else {
-            session()->flash('error', 'Партнер не найден');
+            $this->resetPage(); // Сброс пагинации
+        } catch (\Exception $e) {
+            session()->flash('error', 'Ошибка при удалении: ' . $e->getMessage());
         }
     }
 
@@ -75,9 +80,24 @@ class PartnersTable extends Component
 
     public function showPartnerStats(int $partnerId): void
     {
-        $this->currentPartner = Partner::with(['leads'])->findOrFail($partnerId);
+        $this->currentPartner = Partner::with(['leads', 'users.roles'])->findOrFail($partnerId);
+        $this->partnerUsers = $this->currentPartner->users->map(function ($user) {
+            return [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'phone' => $user->phone,
+                'roles' => $user->getRoleNames()->join(', '),
+                'created_at' => $user->pivot->created_at
+            ];
+        });
         $this->prepareStats();
         $this->showStatsModal = true;
+    }
+
+    public function setActiveTab($tab): void
+    {
+        $this->activeTab = $tab;
     }
 
     protected function prepareStats(): void
@@ -105,36 +125,6 @@ class PartnersTable extends Component
         ];
     }
 
-    protected function getMonthlyLabels(Collection $leads): array
-    {
-        if ($leads->isEmpty()) {
-            return ['Нет данных'];
-        }
-
-        $months = $leads->groupBy(fn($lead) => $lead->created_at->format('Y-m'))
-            ->keys()
-            ->sort()
-            ->map(fn($month) => \Carbon\Carbon::createFromFormat('Y-m', $month)->format('M Y'))
-            ->toArray();
-
-        return $months ?: ['Нет данных'];
-    }
-
-    protected function getMonthlyDealsData(Collection $leads): array
-    {
-        if ($leads->isEmpty()) {
-            return [0];
-        }
-
-        return $leads->groupBy(fn($lead) => $lead->created_at->format('Y-m'))
-            ->sortBy(function($group, $key) {
-                return $key;
-            })
-            ->map(fn($group) => $group->sum('sale_price'))
-            ->values()
-            ->toArray();
-    }
-
     protected function getTopDeals(Collection $leads): Collection
     {
         return $leads->sortByDesc('sale_price')
@@ -144,7 +134,7 @@ class PartnersTable extends Component
     public function closeStatsModal(): void
     {
         $this->showStatsModal = false;
-        $this->reset(['currentPartner', 'stats']);
+        $this->reset(['currentPartner', 'stats', 'partnerUsers', 'activeTab']);
     }
 
     public function getStatusLabel(string $status): string
@@ -156,6 +146,15 @@ class PartnersTable extends Component
             'cancelled' => 'Отменено',
             default => $status
         };
+    }
+
+    public function contactUser($userId): void
+    {
+        $user = User::find($userId);
+        $this->dispatch('notify', 
+            type: 'info',
+            message: "Контактные данные: {$user->email}, {$user->phone}"
+        );
     }
 
     public function render()

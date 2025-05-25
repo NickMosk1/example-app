@@ -5,7 +5,6 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Lead;
 use App\Models\LeadSource;
-use Illuminate\Support\Facades\Log;
 
 class CreateLead extends Component
 {
@@ -15,7 +14,7 @@ class CreateLead extends Component
     public $source_id;
     public $showSourceForm = false;
     public $purchase_price;
-    public $sale_price; // Добавлено новое поле
+    public $sale_price;
     
     public $newSourceName;
     public $newSourceEmail;
@@ -33,7 +32,7 @@ class CreateLead extends Component
             'status' => 'required|string',
             'source_id' => 'required',
             'purchase_price' => 'required|numeric|min:0',
-            'sale_price' => 'required|numeric|min:0', // Добавлено правило валидации
+            'sale_price' => 'required|numeric|min:0',
         ];
 
         if ($this->showSourceForm) {

@@ -495,4 +495,108 @@
             grid-template-columns: 1fr;
         }
     }
+
+    .users-list {
+        max-height: 300px;
+        overflow-y: auto;
+        padding-right: 5px;
+    }
+
+    .user-item {
+        display: flex;
+        align-items: center;
+        padding: 12px;
+        margin-bottom: 10px;
+        background-color: {{$colors['WHITE']}};
+        border-radius: 8px;
+        border: 1px solid {{$colors['LIGHT_GRAY']}};
+        transition: all 0.3s ease;
+    }
+
+    .user-item:hover {
+        background-color: {{$colors['LIGHT_GREEN']}};
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: {{$colors['LIGHT_GRAY']}};
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        overflow: hidden;
+    }
+
+    .user-details {
+        flex: 1;
+    }
+
+    .user-name {
+        font-weight: 600;
+        color: {{$colors['DARK_GRAY']}};
+        font-family: 'Montserrat', sans-serif;
+        margin-bottom: 3px;
+    }
+
+    .user-email {
+        font-size: 12px;
+        color: {{$colors['DEFAULT_GRAY']}};
+        font-family: 'Montserrat', sans-serif;
+        margin-bottom: 5px;
+    }
+
+    .user-meta {
+        display: flex;
+        justify-content: space-between;
+        font-size: 11px;
+    }
+
+    .user-role {
+        padding: 3px 8px;
+        border-radius: 12px;
+        font-weight: bold;
+        font-size: 10px;
+        text-transform: uppercase;
+        color: {{$colors['WHITE']}};
+        background-color: {{$colors['GREEN']}};
+    }
+
+    .user-date {
+        color: {{$colors['DEFAULT_GRAY']}};
+        font-size: 11px;
+    }
+
+    .no-users {
+        text-align: center;
+        padding: 20px;
+        color: {{$colors['DEFAULT_GRAY']}};
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .users-list::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .users-list::-webkit-scrollbar-track {
+        background: {{$colors['LIGHT_GRAY']}};
+        border-radius: 3px;
+    }
+
+    .users-list::-webkit-scrollbar-thumb {
+        background: {{$colors['GREEN']}};
+        border-radius: 3px;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .user-item {
+        animation: fadeIn 0.3s ease-out forwards;
+    }
 </style>
