@@ -11,6 +11,9 @@ use Livewire\WithFileUploads;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\LeadsExport;
 use App\Imports\LeadsImport;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\LeadAssignedNotification;
+use Illuminate\Support\Facades\Log;
 
 class LeadsTable extends Component
 {
@@ -68,6 +71,8 @@ class LeadsTable extends Component
 
         $lead = Lead::findOrFail($this->editingLeadId);
         
+        $oldPartnerId = $lead->partner_id;
+        
         if ($lead->lead_source_id !== $this->leadSourceId) {
             if ($lead->lead_source_id) {
                 $lead->leadSource()->decrement('total_leads');
@@ -87,8 +92,24 @@ class LeadsTable extends Component
             'partner_id' => $this->partnerId,
         ]);
 
+        if ($oldPartnerId != $this->partnerId && $this->partnerId) {
+            try {
+                $partner = Partner::findOrFail($this->partnerId);
+                Mail::to($partner->email)
+                    ->send(new LeadAssignedNotification($lead));
+                    
+                session()->flash('success', 'Письмо партнеру успешно отправлено');
+            } catch (\Exception $e) {
+                Log::error('Ошибка отправки письма партнеру', [
+                    'partner_id' => $this->partnerId,
+                    'error' => $e->getMessage()
+                ]);
+                session()->flash('warning', 'Письмо не отправлено: ' . $e->getMessage());
+            }
+        }
+
         $this->showEditModal = false;
-        session()->flash('modal_success', 'Заявка успешно обновлена');
+        session()->flash('success', 'Заявка успешно обновлена');
     }
 
     public function confirmDelete($leadId)
