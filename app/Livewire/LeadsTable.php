@@ -209,20 +209,40 @@ class LeadsTable extends Component
 
     public function import()
     {
-        $this->validate([
-            'importFile' => 'required|file|mimes:xlsx,xls,csv|max:10240'
-        ]);
-        
+        $this->validate(['importFile' => 'required|file|mimes:xlsx,xls,csv|max:10240']);
+
         try {
-            Excel::import(new LeadsImport, $this->importFile->getRealPath());
-            
-            $this->reset('importFile');
-            $this->showImportModal = false;
-            $this->getCountLeads();
-            
-            session()->flash('message', 'Заявки успешно импортированы!');
+            $import = new LeadsImport();
+            Excel::import($import, $this->importFile);
+
+            $importedCount = $import->getRowCount();
+            $failures = $import->getFailures();
+
+            if (!empty($failures)) {
+                $errorMessages = [];
+                foreach ($failures as $failure) {
+                    $errorMessages[] = "Строка {$failure['row']}: " . implode(', ', $failure['errors']);
+                }
+                
+                $this->dispatch('notify', 
+                    type: 'warning',
+                    message: 'Импорт завершен с ошибками:<br>' . implode('<br>', $errorMessages)
+                );
+            } else {
+                $this->dispatch('notify',
+                    type: 'success',
+                    message: "Успешно импортировано {$importedCount} записей"
+                );
+            }
+
+            $this->reset(['importFile', 'showImportModal']);
+            $this->emit('refreshLeadsTable');
+
         } catch (\Exception $e) {
-            session()->flash('error', 'Ошибка при импорте: ' . $e->getMessage());
+            $this->dispatch('notify',
+                type: 'error',
+                message: 'Ошибка импорта: ' . $e->getMessage()
+            );
         }
     }
 

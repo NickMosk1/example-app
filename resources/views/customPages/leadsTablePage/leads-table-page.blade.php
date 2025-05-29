@@ -103,21 +103,16 @@
                     </div>
                     
                     <div class="modal-actions">
-                        <button 
-                            type="submit" 
-                            class="modal-save-button"
+                        <button type="submit" class="modal-save-button"
                             wire:loading.attr="disabled"
-                            wire:target="importFile"
-                            @if(!$importFile) disabled @endif
-                        >
-                            <span wire:loading wire:target="importFile" class="loading-spinner">
-                                <svg class="spinner-icon" viewBox="0 0 50 50">
-                                    <circle class="spinner-path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
-                                </svg>
-                                Идет загрузка...
-                            </span>
-                            <span wire:loading.remove wire:target="importFile">Импортировать</span>
-                        </button>
+                            wire:target="import">
+                        <span wire:loading.class="d-none" wire:target="import">
+                            Импортировать
+                        </span>
+                        <span wire:loading wire:target="import">
+                            <i class="fas fa-spinner fa-spin"></i> Идет импорт...
+                        </span>
+                    </button>
                         <button 
                             type="button" 
                             class="modal-cancel-button" 
