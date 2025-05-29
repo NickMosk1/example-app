@@ -12,19 +12,15 @@ class Home extends Component
 
     public function mount()
     {
-        // Проверяем, авторизован ли пользователь
         $this->isAuthenticated = Auth::check();
     }
 
     public function logout()
     {
-        // Удаляем пользователя из сессии
         Auth::logout();
 
-        // Обновляем статус авторизации
         $this->isAuthenticated = false;
 
-        // Перезагружаем страницу
         return redirect()->to('/');
     }
 

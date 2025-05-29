@@ -56,7 +56,6 @@ class PartnersTable extends Component
         session()->flash('message', 'Партнер успешно обновлен');
     }
     
-    // Упрощенный метод удаления без подтверждения
     public function delete($partnerId)
     {
         try {
@@ -64,7 +63,7 @@ class PartnersTable extends Component
             $partner->delete();
             
             session()->flash('message', 'Партнер успешно удален');
-            $this->resetPage(); // Сброс пагинации
+            $this->resetPage();
         } catch (\Exception $e) {
             session()->flash('error', 'Ошибка при удалении: ' . $e->getMessage());
         }

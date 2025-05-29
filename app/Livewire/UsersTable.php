@@ -50,20 +50,17 @@ class UsersTable extends Component
             'email' => $this->email,
         ]);
 
-        // Исправлено: передаем имена ролей вместо ID
         $user->syncRoles($this->selectedRoles);
 
         $this->showEditModal = false;
         session()->flash('message', 'Пользователь успешно обновлен');
     }
     
-    // Метод для удаления пользователя
     public function confirmDelete($userId)
     {
         $user = User::find($userId);
 
         if ($user) {
-            // Удаляем все роли пользователя перед удалением
             $user->roles()->detach();
             $user->delete();
             
@@ -73,7 +70,6 @@ class UsersTable extends Component
         }
     }
 
-    // Метод для закрытия модального окна
     public function closeModal()
     {
         $this->showEditModal = false;

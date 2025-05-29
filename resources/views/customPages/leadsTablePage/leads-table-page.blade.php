@@ -83,12 +83,23 @@
                                 accept=".xlsx,.xls,.csv"
                                 class="file-upload-input"
                             >
-                            <span class="file-upload-text">Выберите файл Excel</span>
-                            <span class="file-upload-button">Обзор</span>
+                            <span class="file-upload-text">
+                                @if($importFile)
+                                    <i class="fas fa-file-excel" style="color: green; margin-right: 5px;"></i>
+                                    {{ $importFile->getClientOriginalName() }}
+                                @endif
+                            </span>
                         </label>
                         @error('importFile') 
                             <span class="error-message">{{ $message }}</span> 
                         @enderror
+                        
+                        <div wire:loading wire:target="importFile" class="upload-progress">
+                            <div class="progress-bar">
+                                <div class="progress"></div>
+                            </div>
+                            <div class="progress-text">Загрузка файла...</div>
+                        </div>
                     </div>
                     
                     <div class="modal-actions">
@@ -97,6 +108,7 @@
                             class="modal-save-button"
                             wire:loading.attr="disabled"
                             wire:target="importFile"
+                            @if(!$importFile) disabled @endif
                         >
                             <span wire:loading wire:target="importFile" class="loading-spinner">
                                 <svg class="spinner-icon" viewBox="0 0 50 50">

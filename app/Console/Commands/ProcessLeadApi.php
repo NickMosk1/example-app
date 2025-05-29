@@ -17,13 +17,11 @@ class ProcessLeadApi extends Command
         $url = $this->argument('url');
         $data = $this->option('data');
 
-        // Если данные переданы как опция
         if (!empty($data)) {
             $input = $this->parseInputData($data);
             return $this->createLead($input);
         }
 
-        // Если URL передан - делаем запрос
         try {
             $response = Http::get($url);
             

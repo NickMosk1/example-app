@@ -357,44 +357,43 @@
         height: 18px;
     }
 
-    .file-upload-wrapper {
-        margin: 20px 0;
-    }
-
-    .file-upload-label {
-        display: flex;
-        align-items: center;
-        width: 100%;
-    }
-
-    .file-upload-input {
+    .upload-progress {
+        margin-top: 10px;
         display: none;
     }
 
-    .file-upload-text {
-        flex-grow: 1;
-        padding: 12px;
-        background-color: {{$colors['WHITE']}};
-        border: 1px solid {{$colors['LIGHT_GRAY']}};
-        border-right: none;
-        border-radius: 5px 0 0 5px;
-        font-family: 'Montserrat', sans-serif;
+    [wire:loading].upload-progress,
+    [wire:loading][wire:target="importFile"].upload-progress {
+        display: block;
     }
 
-    .file-upload-button {
-        padding: 12px 20px;
-        background-color: {{$colors['GREEN']}};
-        color: {{$colors['WHITE']}};
-        border-radius: 0 5px 5px 0;
-        cursor: pointer;
-        transition: background-color 0.3s;
+    .progress-bar {
+        width: 100%;
+        height: 6px;
+        background-color: #f0f0f0;
+        border-radius: 3px;
+        overflow: hidden;
     }
 
-    .file-upload-button:hover {
-        background-color: {{$colors['GREEN_HOVER']}};
+    .progress {
+        height: 100%;
+        width: 0;
+        background-color: #4CAF50;
+        animation: progress 2s ease-in-out infinite;
     }
 
-    /* Лоадер */
+    .progress-text {
+        margin-top: 5px;
+        font-size: 12px;
+        color: #666;
+    }
+
+    @keyframes progress {
+        0% { width: 0; }
+        50% { width: 50%; }
+        100% { width: 100%; }
+    }
+
     .loading-spinner {
         display: inline-flex;
         align-items: center;

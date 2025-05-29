@@ -18,7 +18,7 @@ class LeadController extends Controller
             'leads.*.quantity' => 'required|integer|min:1',
             'leads.*.type' => 'required|string|max:255',
             'leads.*.status' => 'required|string|in:pending,completed,canceled',
-            'leads.*.lead_source_id' => 'required|integer' // Обязательное поле
+            'leads.*.lead_source_id' => 'required|integer'
         ]);
 
         if ($validator->fails()) {
@@ -29,13 +29,12 @@ class LeadController extends Controller
 
         $createdLeads = [];
         foreach ($request->input('leads') as $leadData) {
-            // Проверяем существование источника
+
             $leadSource = LeadSource::find($leadData['lead_source_id']);
             
-            // Если источник не найден - создаем новый
             if (!$leadSource) {
                 $leadSource = LeadSource::create([
-                    'id' => $leadData['lead_source_id'], // Сохраняем переданный ID
+                    'id' => $leadData['lead_source_id'],
                     'name' => 'Источник ' . Str::random(8),
                     'is_native' => false,
                     'email' => 'source_' . Str::random(6) . '@example.com',
@@ -48,7 +47,6 @@ class LeadController extends Controller
                 ]);
             }
 
-            // Создаем заявку
             $lead = Lead::create([
                 'quantity' => $leadData['quantity'],
                 'type' => $leadData['type'],
@@ -66,7 +64,6 @@ class LeadController extends Controller
             
             $createdLeads[] = $lead;
             
-            // Увеличиваем счетчик заявок у источника
             $leadSource->increment('total_leads');
         }
 
