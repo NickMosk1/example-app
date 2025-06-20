@@ -199,7 +199,7 @@ class LeadsTable extends Component
         
         return view('customPages.leadsTablePage.leads-table-page', [
             'leads' => $leads,
-        ])->layout('components.layouts.customLayout.custom-layout');
+        ]);
     }
 
     public function getCountLeads()
@@ -250,13 +250,21 @@ class LeadsTable extends Component
     {
         $fileName = 'leads_' . date('Y-m-d') . '.' . $format;
         
+        $filters = [
+            'partner_id' => $this->partnerFilter,
+            'lead_source_id' => $this->sourceFilter,
+            'status' => $this->statusFilter,
+            'sort_field' => $this->sortField,
+            'sort_direction' => $this->sortDirection,
+        ];
+        
         if ($format === 'csv') {
-            return Excel::download(new LeadsExport, $fileName, \Maatwebsite\Excel\Excel::CSV, [
+            return Excel::download(new LeadsExport($filters), $fileName, \Maatwebsite\Excel\Excel::CSV, [
                 'Content-Type' => 'text/csv; charset=UTF-8',
             ]);
         }
         
-        return Excel::download(new LeadsExport, $fileName);
+        return Excel::download(new LeadsExport($filters), $fileName);
     }
 
     private function getStatusText($status)
@@ -281,5 +289,12 @@ class LeadsTable extends Component
     public function closeImportModal()
     {
         $this->showImportModal = false;
+    }
+
+    protected $listeners = ['showFlashMessage' => 'showFlash'];
+
+    public function showFlash($type, $message)
+    {
+        session()->flash($type, $message);
     }
 }

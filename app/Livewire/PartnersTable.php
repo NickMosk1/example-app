@@ -164,6 +164,6 @@ class PartnersTable extends Component
         
         return view('customPages.partnersTablePage.partners-table-page', [
             'partners' => $partners,
-        ])->layout('components.layouts.customLayout.custom-layout');
+        ]);
     }
 }

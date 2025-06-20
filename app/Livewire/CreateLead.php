@@ -145,6 +145,6 @@ class CreateLead extends Component
         return view('customPages.createLeadPage.create-lead-page', [
             'sources' => $sources,
             'priceRanges' => $priceRanges,
-        ])->layout('components.layouts.customLayout.custom-layout');
+        ]);
     }
 }

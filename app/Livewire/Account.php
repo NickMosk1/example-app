@@ -59,8 +59,6 @@ class Account extends Component
     {
         return view('customPages.accountPage.account-page', [
             'user' => $this->user
-        ])->layout('components.layouts.customLayout.custom-layout', [
-            'title' => 'Личный кабинет'
         ]);
     }
 }

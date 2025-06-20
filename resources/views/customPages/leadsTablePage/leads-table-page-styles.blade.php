@@ -627,4 +627,60 @@
         transition: all 0.3s ease;
     }
 
+    .flash-messages-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1050;
+        max-width: 400px;
+    }
+
+    .flash-message {
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px {{ $colors['LIGHT_GRAY'] }};
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        animation: flashFadeIn 0.3s ease-out;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .flash-success {
+        background-color: {{ $colors['GREEN'] }};
+        color: {{ $colors['WHITE'] }};
+    }
+
+    .flash-warning {
+        background-color: {{ $colors['ORANGE'] }};
+        color: {{ $colors['WHITE'] }};
+    }
+
+    .flash-close-btn {
+        background: none;
+        border: none;
+        color: inherit;
+        cursor: pointer;
+        font-size: 1.2em;
+        margin-left: 10px;
+        transition: transform 0.2s ease;
+    }
+
+    .flash-close-btn:hover {
+        transform: scale(1.2);
+    }
+
+    .flash-message.fade-out {
+        animation: flashFadeOut 0.5s ease-in forwards;
+    }
+
+    @keyframes flashFadeOut {
+        from { opacity: 1; transform: translateY(0); }
+        to { opacity: 0; transform: translateY(-20px); }
+    }
+
+    @keyframes flashFadeOut {
+        to { opacity: 0; transform: translateY(-20px); }
+    }
 </style>

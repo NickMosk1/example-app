@@ -1,4 +1,19 @@
 <div>
+    <div class="flash-messages-container">
+        @if(session()->has('success'))
+            <div class="flash-message flash-success">
+                <span>{{ session('success') }}</span>
+                <button class="flash-close-btn">&times;</button>
+            </div>
+        @endif
+
+        @if(session()->has('warning'))
+            <div class="flash-message flash-warning">
+                <span>{{ session('warning') }}</span>
+                <button class="flash-close-btn">&times;</button>
+            </div>
+        @endif
+    </div>
     <div class="table-actions">
         <div class="import-export-buttons">
             <button wire:click="$set('showImportModal', true)" class="admin-button">
@@ -413,6 +428,26 @@
                     if (title) title.classList.remove('hovered');
                 });
             }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const flashMessages = document.querySelectorAll('.flash-message');
+            flashMessages.forEach(message => {
+                const timer = setTimeout(() => {
+                    message.classList.add('fade-out');
+                    setTimeout(() => {
+                        message.remove();
+                    }, 500);
+                }, 5000);
+                const closeBtn = message.querySelector('.flash-close-btn');
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', function() {
+                        clearTimeout(timer);
+                        message.classList.add('fade-out');
+                        setTimeout(() => message.remove(), 500);
+                    });
+                }
+            });
         });
     </script>
 

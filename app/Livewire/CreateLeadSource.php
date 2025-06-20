@@ -60,7 +60,6 @@ class CreateLeadSource extends Component
 
     public function render()
     {
-        return view('customPages.createLeadSourcePage.create-lead-source-page')
-            ->layout('components.layouts.customLayout.custom-layout');
+        return view('customPages.createLeadSourcePage.create-lead-source-page');
     }
 }

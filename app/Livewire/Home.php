@@ -29,6 +29,6 @@ class Home extends Component
         return view('customPages.homePage.home-page', [
             'title' => $this->title,
             'isAuthenticated' => $this->isAuthenticated,
-        ])->layout('components.layouts.customLayout.custom-layout');
+        ]);
     }
 }

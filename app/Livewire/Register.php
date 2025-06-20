@@ -16,10 +16,7 @@ class Register extends Component
 
     public function render()
     {
-        return view('customPages.registerPage.register-page')
-            ->layout('components.layouts.customLayout.custom-layout', [
-                'title' => 'Регистрация'
-            ]);
+        return view('customPages.registerPage.register-page');
     }
 
     public function register()

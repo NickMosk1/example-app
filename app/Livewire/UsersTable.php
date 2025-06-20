@@ -87,6 +87,6 @@ class UsersTable extends Component
         return view('customPages.usersTablePage.users-table-page', [
             'users' => $users,
             'allRoles' => $this->allRoles,
-        ])->layout('components.layouts.customLayout.custom-layout');
+        ]);
     }
 }

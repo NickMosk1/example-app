@@ -60,9 +60,7 @@ class LeadsImport implements ToModel, WithHeadingRow, WithValidation, SkipsOnFai
     {
         $statuses = [
             'in_progress' => 'in_progress',
-            'в работе' => 'in_progress',
             'pending' => 'pending',
-            'ожидание' => 'pending',
             'sold' => 'sold_to_partner',
             'cancelled' => 'cancelled'
         ];

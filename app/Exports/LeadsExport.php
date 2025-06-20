@@ -20,24 +20,20 @@ class LeadsExport implements FromCollection, WithHeadings, WithMapping
     {
         $query = Lead::with(['leadSource', 'partner']);
 
-        if (isset($this->filters['partner_id'])) {
+        if (isset($this->filters['partner_id']) && $this->filters['partner_id']) {
             $query->where('partner_id', $this->filters['partner_id']);
         }
 
-        if (isset($this->filters['lead_source_id'])) {
+        if (isset($this->filters['lead_source_id']) && $this->filters['lead_source_id']) {
             $query->where('lead_source_id', $this->filters['lead_source_id']);
         }
 
-        if (isset($this->filters['status'])) {
+        if (isset($this->filters['status']) && $this->filters['status']) {
             $query->where('status', $this->filters['status']);
         }
 
-        if (isset($this->filters['date_from'])) {
-            $query->where('created_at', '>=', $this->filters['date_from']);
-        }
-
-        if (isset($this->filters['date_to'])) {
-            $query->where('created_at', '<=', $this->filters['date_to']);
+        if (isset($this->filters['sort_field']) && isset($this->filters['sort_direction'])) {
+            $query->orderBy($this->filters['sort_field'], $this->filters['sort_direction']);
         }
 
         return $query->get();

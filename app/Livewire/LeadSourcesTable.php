@@ -147,6 +147,6 @@ class LeadSourcesTable extends Component
     {
         return view('customPages.leadSourcesTablePage.lead-sources-table-page', [
             'sources' => LeadSource::paginate(15)
-        ])->layout('components.layouts.customLayout.custom-layout');
+        ]);
     }
 }

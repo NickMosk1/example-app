@@ -11,19 +11,18 @@ class LeadAssignedNotification extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $lead;
+    public const EMAIL_SUBJECT = 'Для вас новая заявка!';
+    public const VIEW_NAME = 'emails.lead_assigned';
 
-    public function __construct(Lead $lead)
-    {
-        $this->lead = $lead;
-    }
+    public function __construct(
+        public Lead $lead
+    ) {}
 
     public function build()
     {
-        return $this->subject('Для вас новая заявка!')
-                    ->view('emails.lead_assigned')
-                    ->with([
-                        'lead' => $this->lead,
-                    ]);
+        return $this
+            ->subject(self::EMAIL_SUBJECT)
+            ->view(self::VIEW_NAME)
+            ->with(['lead' => $this->lead]);
     }
 }
